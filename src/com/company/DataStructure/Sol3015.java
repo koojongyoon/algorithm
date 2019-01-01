@@ -1,4 +1,4 @@
-package com.company;
+package com.company.DataStructure;
 
 import java.io.BufferedReader;
 import java.io.IOException;

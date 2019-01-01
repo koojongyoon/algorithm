@@ -1,4 +1,4 @@
-package com.company;
+package com.company.DP;
 
 import java.io.*;
 import java.util.StringTokenizer;
