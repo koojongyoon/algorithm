@@ -18,11 +18,9 @@ public class Sol1708 {
             this.x = x;
             this.y = y;
         }
-
     }
 
     static Point startPoint;
-    static Stack<Point> stack;
 
     public static void main(String[] args) throws IOException {
 
@@ -43,11 +41,7 @@ public class Sol1708 {
 
     static Stack<Point> findConvexHull(List<Point> pointList)
     {
-
         findStartPoint(pointList);
-
-        stack = new Stack<>();
-        stack.add(startPoint);
 
         // 입력값들의 값을 비교해 우선순위를 만들어서 반시계방향을 기준으로 정렬한다
         pointList.sort(new Comparator<Point>() {
@@ -66,13 +60,16 @@ public class Sol1708 {
                         return 1;
                     }
                 }
-                return 0;
+                return -1;
             }
         });
 
+        Stack<Point> stack = new Stack<>();
+        stack.add(startPoint);
+
         // 가장 외곽선이 아닌경우에 stack에서 값을 꺼내고 그렇지 않으면 가장 외곽에 있는 점이라고 판단하고 stack에 넣는다.
         for (int i = 1; i < pointList.size(); i++) {
-            while (stack.size() > 1 && 0 >= ccw(stack.get(stack.size()-2), stack.peek(), pointList.get(i))) {
+            while (stack.size() > 1 && 0 >= ccw(stack.get(stack.size()-2), stack.get(stack.size()-1), pointList.get(i))) {
                 stack.pop();
             }
             stack.add(pointList.get(i));
@@ -109,15 +106,15 @@ public class Sol1708 {
         long result = (point1.x * point2.y + point2.x * point3.y + point3.x * point1.y)
                 - (point3.x * point2.y + point2.x * point1.y + point1.x * point3.y);
 
+        //반시계 방향
         if (result > 0) {
-            //반시계 방향
             return 1;
-        } else if (result < 0) {
-            //시계 방향
-            return -1;
-        } else {
-            //같은 직선상
-            return 0;
         }
+        //시계 방향
+        if (result < 0) {
+            return -1;
+        }
+        //같은 직선상
+        return 0;
     }
 }
