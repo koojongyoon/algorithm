@@ -1,16 +1,15 @@
 package com.company.Uncategorized;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-public class TPS {
+public class Sol2098 {
 
     static int v;
     static int[][] adj;
     static int[][] cache;
     static int end = 1;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         v = sc.nextInt();
         adj = new int[v +1][v +1];
