@@ -1,47 +1,50 @@
 package com.company.Tree;
 
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Sol2957 {
 
-    static int[] height;
-    static ArrayList<Integer> list;
+    public static void main(String[] args) throws IOException {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int inputCount = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        height = new int[inputCount+1];
-        list = new ArrayList<>();
-
+        int nodeCount = Integer.parseInt(br.readLine());
+        int[] nodeDepth = new int[nodeCount+1];
         int insertCount = 0;
 
-        for (int i = 0; i < inputCount; i++) {
-            insertCount = insertCount + getNodeDepth(sc.nextInt())-1;
-            System.out.println(insertCount);
+        ArrayList<Integer> nodeList = new ArrayList<>();
+
+        for (int i = 0; i < nodeCount; i++) {
+            insertCount = insertCount + getNodeDepth(Integer.parseInt(br.readLine()), nodeDepth, nodeList);
+            bw.write(insertCount+"\n");
         }
 
-        sc.close();
+        br.close();
+        bw.flush();
+        bw.close();
     }
 
-    private static int getNodeDepth(int node) {
-        int size = list.size();
-        int lowerBound = getLowerBound(list, 0, size, node);
-        int left = lowerBound > 0 ? height[list.get(lowerBound - 1)] : 0;
-        int right = lowerBound < size ? height[list.get(lowerBound)] : 0;
+    private static int getNodeDepth(int node, int[] nodeDepth, ArrayList<Integer> nodeList) {
+        int size = nodeList.size();
+        int lowerBound = getLowerBound(0, size, node, nodeList);
+        int left = lowerBound > 0 ? nodeDepth[nodeList.get(lowerBound - 1)] : 0;
+        int right = lowerBound < size ? nodeDepth[nodeList.get(lowerBound)] : 0;
 
-        height[node] = Math.max(left, right) + 1;
-        list.add(lowerBound, node);
+        nodeDepth[node] = Math.max(left, right) + 1;
+        nodeList.add(lowerBound, node);
 
-        return height[node];
+        return nodeDepth[node] - 1;
     }
 
     // 이진 탐색과 같은 방식으로 찾고자 하는 값(value)를 찾을때까지 반복문을 돌린다. (중간값을 찾음)
-    private static int getLowerBound(ArrayList<Integer> list, int front, int rear, int value) {
+    // lower bound = 찾고자 하는 값보다 이상인 값.
+    // upper bound = 찾고자 하는 값을 초과하는 값.
+    private static int getLowerBound(int front, int rear, int value, ArrayList<Integer> nodeList) {
         while(front < rear) {
             int mid = (front + rear)/2;
-            if (list.get(mid) < value) {
+            if (nodeList.get(mid) < value) {
                 front = mid + 1;
             } else {
                 rear = mid;
