@@ -1,73 +1,52 @@
 package com.company.Tree;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Sol2957 {
 
-    static int[] depthRecord;
-    static int[] resultRecord;
+    static int[] height;
+    static ArrayList<Integer> list;
 
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int inputCount = sc.nextInt();
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        height = new int[inputCount+1];
+        list = new ArrayList<>();
 
-        int nodeCount = Integer.parseInt(br.readLine());
-        initializeDepthRecord(nodeCount);
-        initializeResultRecord(nodeCount);
+        int insertCount = 0;
 
-        int firstNode = Integer.parseInt(br.readLine());
-        depthRecord[firstNode] = 0;
-        resultRecord[1] = depthRecord[firstNode];
-
-        for (int i = 2; i < depthRecord.length; i++) {
-            int node = Integer.parseInt(br.readLine());
-            depthRecord[node] = findNodeDepth(node);
-            resultRecord[i] = depthRecord[node];
+        for (int i = 0; i < inputCount; i++) {
+            insertCount = insertCount + getNodeDepth(sc.nextInt())-1;
+            System.out.println(insertCount);
         }
 
-        int resultSum = 0;
-        for (int i = 1; i < depthRecord.length; i++) {
-            resultSum = resultSum + resultRecord[i];
-            System.out.println(resultSum);
-        }
+        sc.close();
     }
 
-    private static int findNodeDepth(int nodeNumber) {
-        int closedHigher = 0;
-        int closedLower = 0;
+    private static int getNodeDepth(int node) {
+        int size = list.size();
+        int lowerBound = getLowerBound(list, 0, size, node);
+        int left = lowerBound > 0 ? height[list.get(lowerBound - 1)] : 0;
+        int right = lowerBound < size ? height[list.get(lowerBound)] : 0;
 
-        for (int i = nodeNumber; i > 0; i--) {
-            if (depthRecord[i] >= 0) {
-                closedLower = depthRecord[i];
-                break;
+        height[node] = Math.max(left, right) + 1;
+        list.add(lowerBound, node);
+
+        return height[node];
+    }
+
+    // 이진 탐색과 같은 방식으로 찾고자 하는 값(value)를 찾을때까지 반복문을 돌린다. (중간값을 찾음)
+    private static int getLowerBound(ArrayList<Integer> list, int front, int rear, int value) {
+        while(front < rear) {
+            int mid = (front + rear)/2;
+            if (list.get(mid) < value) {
+                front = mid + 1;
+            } else {
+                rear = mid;
             }
         }
-
-        for (int i = nodeNumber; i < depthRecord.length; i++) {
-            if ( depthRecord[i] >= 0) {
-                closedHigher = depthRecord[i];
-                break;
-            }
-        }
-
-        if (closedLower >= closedHigher) {
-            depthRecord[nodeNumber] = closedLower + 1;
-            return closedLower + 1;
-        } else {
-            depthRecord[nodeNumber] = closedHigher + 1;
-            return closedHigher + 1;
-        }
-    }
-
-    private static void initializeDepthRecord(int inputCount) {
-        depthRecord = new int[inputCount + 1];
-        Arrays.fill(depthRecord, -1);
-    }
-
-    private static void initializeResultRecord(int inputCount) {
-        resultRecord = new int[inputCount + 1];
+        return rear;
     }
 }
