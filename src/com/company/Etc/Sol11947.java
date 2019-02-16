@@ -12,22 +12,13 @@ public class Sol11947 {
 
         for (int i = 0; i < testCase; i++) {
             String num = br.readLine();
-            int numCount = num.length();
-
-            String reverseNum = "";
-            for (int k = 0; k < numCount; k++) {
-                reverseNum = reverseNum + "9";
+            long upperNum = (long) Math.pow(10, num.length());
+            long input = Long.parseLong(num);
+            if (input > upperNum/2) {
+                System.out.println(upperNum/2 * ((upperNum/2)-1));
+            } else {
+                System.out.println(input * (upperNum-1-input));
             }
-
-            long reverse = Long.parseLong(reverseNum);
-            long origin = Long.parseLong(num);
-            long calcResult = reverse - origin;
-
-            String originStr = origin + "";
-            String calcResultStr = calcResult+ "";
-            long finalValue = Long.parseLong(calcResultStr.substring(numCount - originStr.length(), numCount));
-
-            bw.write(finalValue * origin+"\n");
         }
 
         br.close();
