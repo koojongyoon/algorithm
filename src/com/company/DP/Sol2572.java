@@ -11,52 +11,49 @@ public class Sol2572 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int colorCount = Integer.parseInt(br.readLine());
+        String[] inputColor = br.readLine().split(" ");
+        String[] colorOrder = new String[colorCount+1];
+        for (int i = 0; i < colorCount; i++) {
+            colorOrder[i+1] = inputColor[i];
+        }
+        String[] townRoadColor = br.readLine().split(" ");
 
-        int cardCount = Integer.parseInt(br.readLine());
-        String[] cardList = br.readLine().split(" ");
+        int townCount = Integer.parseInt(townRoadColor[0]);
+        int roadCount = Integer.parseInt(townRoadColor[1]);
 
-        String[] townRoad = br.readLine().split(" ");
-        int townCount = Integer.parseInt(townRoad[0]);
-        int roadCount = Integer.parseInt(townRoad[1]);
+        Integer.parseInt(townRoadColor[1]);
+        String[][] map = new String[townCount+1][townCount+1];
 
-        String[][] wayMap = new String[1002][1002];
-        int[][] score = new int[1002][1002];
-        boolean[][] isStartPoint = new boolean[1002][1002];
+        for(int i = 0; i < roadCount; i++) {
+            String[] townRoad = br.readLine().split(" ");
+            int start = Integer.parseInt(townRoad[0]);
+            int end = Integer.parseInt(townRoad[1]);
+            String color = townRoad[2];
 
-        for(int i=0; i<roadCount; i++)  {
-            String[] roadColor = br.readLine().split(" ");
-            wayMap[Integer.parseInt(roadColor[0])][Integer.parseInt(roadColor[1])] = roadColor[2];
-            wayMap[Integer.parseInt(roadColor[1])][Integer.parseInt(roadColor[0])] = roadColor[2];
+            map[start][end] = color;
+            map[end][start] = color;
         }
 
-        isStartPoint[0][1] = true;
+        int[][] scoreMap = new int[roadCount+1][townCount+1];
 
-        int currentScore;
-
-        for (int i = 0; i < cardCount; i++)  {
-            for (int j = 1; j <= townCount; j++) {
-                if(isStartPoint[i][j]) {
-                    for (int k = 1; k <= townCount; k++) {
-                        if (wayMap[j][k] != null && wayMap[j][k].equals(cardList[i])) {
-                            currentScore = score[i][j] + 10;
-                        } else {
-                            currentScore = score[i][j];
-                        }
-
-                        if (currentScore > score[i + 1][k]) {
-                            score[i + 1][k] = currentScore;
-                        }
-
-                        isStartPoint[i + 1][k] = true;
+        for (int n = 1; n <= roadCount; n++) {
+            for (int i = 1; i <= townCount; i++) {
+                for (int k = 1; k <= townCount; k++) {
+                    if (colorOrder[n].equals(map[i][k])) {
+                        scoreMap[n][i] = Math.max(scoreMap[n-1][i] + 10, scoreMap[n][i]);
+                    } else {
+                        scoreMap[n][i] = Math.max(scoreMap[n-1][i], scoreMap[n][i]);
                     }
                 }
             }
         }
 
-        int maxScore = 0;
-        for(int i=0; i < townCount+1; i++) {
-            System.out.println(score[cardCount][i]);
-            maxScore = Math.max(maxScore, score[cardCount][i]);
+        int maxScore = Integer.MIN_VALUE;
+        for (int i = 1; i <= townCount; i++) {
+            if (maxScore < scoreMap[roadCount][i]) {
+                maxScore = scoreMap[roadCount][i];
+            }
         }
 
         System.out.println(maxScore);
