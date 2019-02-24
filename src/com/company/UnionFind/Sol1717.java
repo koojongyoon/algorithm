@@ -1,4 +1,4 @@
-package com.company.Etc;
+package com.company.UnionFind;
 
 import java.util.Scanner;
 
