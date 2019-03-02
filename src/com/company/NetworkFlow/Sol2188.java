@@ -3,7 +3,7 @@ package com.company.NetworkFlow;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Sol2188__failure {
+public class Sol2188 {
 
     static Cow[] cowArr;
     static int[] houseArr;
