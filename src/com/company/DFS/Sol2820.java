@@ -3,84 +3,140 @@ package com.company.DFS;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 
-/**
- * Created by koojongyun on 2019. 1. 1..
- */
+// https://github.com/ISKU/Algorithm/blob/master/BOJ/2820/Main.java
 public class Sol2820 {
 
-    static final String SALARY_UPDATE = "p";
-    static final String SALARY_PRINT = "u";
-    static List<Employee> employeeList;
-    static Stack<Employee> willUpdateEmployee;
-
-    static class Employee {
-
-        int myNumber;
-        int salary;
-        int upperBossNumber;
-
-        public Employee(int myNumber, int salary, int upperBossNumber) {
-            this.myNumber = myNumber;
-            this.salary = salary;
-            this.upperBossNumber = upperBossNumber;
-        }
-    }
-
+    static ArrayList<Integer>[] tree;
+    static String SALARY_MODIFY = "p";
+    static String SALARY_OUTPUT = "u";
+    static boolean[] visited;
+    static int[] start;
+    static int[] end;
+    static int order;
+    static int node;
+    static int[] lazy;
+    static int[] segmentTree;
+    static int[] salary;
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String[] NM = br.readLine().split(" ");
+        Scanner sc = new Scanner(System.in);
+        int employeeNum = sc.nextInt();
+        int query = sc.nextInt();
 
-        int employeeCount = Integer.parseInt(NM[0]);
-        int queryCount = Integer.parseInt(NM[1]);
+        tree = new ArrayList[employeeNum+1];
+        salary = new int[employeeNum+1];
+        int bossSalary = sc.nextInt();
+        salary[1] = bossSalary;
 
-        employeeList = new ArrayList<>();
-        willUpdateEmployee = new Stack<>();
-
-        for (int i = 0; i < employeeCount; i++) {
-            String[] salaryBoss = br.readLine().split(" ");
-            int salary = Integer.parseInt(salaryBoss[0]);
-            int upperBossNumber = 0;
-
-            if (1 <  salaryBoss.length) {
-                upperBossNumber = Integer.parseInt(salaryBoss[1]);
-            }
-            employeeList.add(new Employee(i+1, salary, upperBossNumber));
+        for (int i = 0; i <= employeeNum; i++) {
+            tree[i] = new ArrayList<>();
         }
 
-        for (int i = 0; i < queryCount; i++) {
-            String[] queryCommand = br.readLine().split(" ");
+        for (int i = 2; i <= employeeNum; i++) {
+            int mySalary = sc.nextInt();
+            int myBoss = sc.nextInt();
+            salary[i] = mySalary;
+            tree[i].add(myBoss);
+            tree[myBoss].add(i);
+        }
 
-            if(SALARY_UPDATE.equals(queryCommand[0])) {
-                update(Integer.parseInt(queryCommand[1]), Integer.parseInt(queryCommand[2]));
+        visited = new boolean[employeeNum+1];
+        start = new int[employeeNum+1];
+        end = new int[employeeNum+1];
+
+        makeArray(1);
+
+        int m = 0;
+        while(true) {
+            if (employeeNum < Math.pow(2, m)) {
+                node = (int) Math.pow(2, m);
+                break;
             }
+            m++;
+        }
 
-            if(SALARY_PRINT.equals(queryCommand[0])) {
-                for (int k = 0; k < employeeList.size(); k++) {
-                    if (employeeList.get(k).myNumber == Integer.parseInt(queryCommand[1])) {
-                        System.out.println(employeeList.get(k).salary);
-                    }
+        lazy = new int[node*2];
+        segmentTree = new int[node*2];
+
+        for (int i = 1; i <= employeeNum; i++) {
+            update(1, node ,1 ,start[i], start[i], salary[i]);
+        }
+
+
+        for (int i = 0; i < query; i++) {
+            String execute = sc.next();
+            if (execute.equals(SALARY_MODIFY)) {
+                int employee = sc.nextInt();
+                int modifySalary = sc.nextInt();
+                if (start[employee] == end[employee]) {
+                    continue;
                 }
+                update(1, node, 1, start[employee]+1 , end[employee], modifySalary);
+
+            } else if (execute.equals(SALARY_OUTPUT)) {
+                int employee = sc.nextInt();
+                System.out.println(sum(1, node, 1, start[employee], start[employee]));
             }
         }
     }
 
-    private static void update(int upperBossNumber, int updateSalary) {
+    private static int sum(int l, int r, int i, int L, int R) {
+        propagate(l, r, i);
 
-        for (int i = 0; i < employeeList.size(); i++) {
-            if (employeeList.get(i).upperBossNumber == upperBossNumber) {
-                employeeList.get(i).salary = employeeList.get(i).salary + updateSalary;
-                willUpdateEmployee.add(employeeList.get(i));
-            }
+        if (r < L || l > R) {
+            return 0;
         }
 
-        if (willUpdateEmployee.empty()) {
+        if (L <= l && R >= r) {
+            return segmentTree[i];
+        }
+
+        int mid = (l+r)/2;
+        return sum(l, mid, i*2, L, R) + sum(mid+1, r, i*2+1, L, R);
+    }
+
+    private static void update(int l, int r, int i, int L, int R, int salary) {
+        propagate(l, r, i);
+        //구간한의 범위를 벗어난 경우
+        if (r < L || l > R) {
             return;
         }
 
-        Employee employee = willUpdateEmployee.pop();
-        update(employee.myNumber, updateSalary);
+        if (L<=l && r<=R) {
+            lazy[i] = lazy[i] + salary;
+            propagate(l, r, i);
+            return;
+        }
+
+        int mid = (l+r)/2;
+        update(l, mid, i*2, L, R, salary);
+        update(mid+1, r, i*2+1, L, R, salary);
+        segmentTree[i] = segmentTree[i*2] + segmentTree[i*2+1];
+
+    }
+
+    private static void propagate(int l, int r, int i) {
+        if (lazy[i] == 0) {
+            return;
+        }
+
+        if (i < node) {
+            lazy[i*2] = lazy[i*2] + lazy[i];
+            lazy[i*2+1] = lazy[i*2+1] + lazy[i];
+        }
+        segmentTree[i] = segmentTree[i] + ((r-l+1) * lazy[i]);
+        lazy[i] = 0;
+    }
+
+    private static void makeArray(int employee) {
+        visited[employee] = true;
+        start[employee] = ++order;
+        for (int k : tree[employee])
+            if (!visited[k])
+                makeArray(k);
+        end[employee] = order;
     }
 }
