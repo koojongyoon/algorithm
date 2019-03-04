@@ -2,9 +2,7 @@ package com.company.DFS;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.Stack;
 
 // https://github.com/ISKU/Algorithm/blob/master/BOJ/2820/Main.java
 public class Sol2820 {
@@ -28,8 +26,7 @@ public class Sol2820 {
 
         tree = new ArrayList[employeeNum+1];
         salary = new int[employeeNum+1];
-        int bossSalary = sc.nextInt();
-        salary[1] = bossSalary;
+        salary[1] = sc.nextInt();
 
         for (int i = 0; i <= employeeNum; i++) {
             tree[i] = new ArrayList<>();
@@ -47,7 +44,7 @@ public class Sol2820 {
         start = new int[employeeNum+1];
         end = new int[employeeNum+1];
 
-        makeArray(1);
+        dfs(1);
 
         int m = 0;
         while(true) {
@@ -83,60 +80,60 @@ public class Sol2820 {
         }
     }
 
-    private static int sum(int l, int r, int i, int L, int R) {
-        propagate(l, r, i);
-
-        if (r < L || l > R) {
-            return 0;
-        }
-
-        if (L <= l && R >= r) {
-            return segmentTree[i];
-        }
-
-        int mid = (l+r)/2;
-        return sum(l, mid, i*2, L, R) + sum(mid+1, r, i*2+1, L, R);
-    }
-
-    private static void update(int l, int r, int i, int L, int R, int salary) {
-        propagate(l, r, i);
+    private static void update(int l, int r, int target, int L, int R, int salary) {
+        propagate(l, r, target);
         //구간한의 범위를 벗어난 경우
         if (r < L || l > R) {
             return;
         }
 
         if (L<=l && r<=R) {
-            lazy[i] = lazy[i] + salary;
-            propagate(l, r, i);
+            lazy[target] = lazy[target] + salary;
+            propagate(l, r, target);
             return;
         }
 
         int mid = (l+r)/2;
-        update(l, mid, i*2, L, R, salary);
-        update(mid+1, r, i*2+1, L, R, salary);
-        segmentTree[i] = segmentTree[i*2] + segmentTree[i*2+1];
+        update(l, mid, target*2, L, R, salary);
+        update(mid+1, r, target*2+1, L, R, salary);
+        segmentTree[target] = segmentTree[target*2] + segmentTree[target*2+1];
 
     }
 
-    private static void propagate(int l, int r, int i) {
-        if (lazy[i] == 0) {
+    private static int sum(int l, int r, int target, int L, int R) {
+        propagate(l, r, target);
+
+        if (r < L || l > R) {
+            return 0;
+        }
+
+        if (L <= l && R >= r) {
+            return segmentTree[target];
+        }
+
+        int mid = (l+r)/2;
+        return sum(l, mid, target*2, L, R) + sum(mid+1, r, target*2+1, L, R);
+    }
+
+    private static void propagate(int l, int r, int target) {
+        if (lazy[target] == 0) {
             return;
         }
 
-        if (i < node) {
-            lazy[i*2] = lazy[i*2] + lazy[i];
-            lazy[i*2+1] = lazy[i*2+1] + lazy[i];
+        if (l != r) {
+            lazy[target*2] = lazy[target*2] + lazy[target];
+            lazy[target*2+1] = lazy[target*2+1] + lazy[target];
         }
-        segmentTree[i] = segmentTree[i] + ((r-l+1) * lazy[i]);
-        lazy[i] = 0;
+        segmentTree[target] = segmentTree[target] + ((r-l+1) * lazy[target]);
+        lazy[target] = 0;
     }
 
-    private static void makeArray(int employee) {
+    private static void dfs(int employee) {
         visited[employee] = true;
         start[employee] = ++order;
         for (int k : tree[employee])
             if (!visited[k])
-                makeArray(k);
+                dfs(k);
         end[employee] = order;
     }
 }
