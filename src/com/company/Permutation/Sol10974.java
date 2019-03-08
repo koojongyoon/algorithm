@@ -7,14 +7,12 @@ import java.io.InputStreamReader;
 public class Sol10974 {
 
     static int[] output;
-    static int[] arr;
     static boolean[] visited;
     static int N;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        arr = new int[N];
         output = new int[N];
         visited = new boolean[N];
         for (int i = 0; i < N; i++) {
