@@ -1,30 +1,47 @@
 package com.company.Uncategorized;
 
-import java.io.*;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Sol2569 {
-    static int[] origin;
-    static int[] sort;
 
-    public static void main(String[] args) throws IOException {
+    static int[] originBox;
+    static int[] sortBox;
+    static int resultNumber;
+    static int min = 9999999;
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    public static void main(String[] args) {
 
-        int loadCount = Integer.parseInt(br.readLine());
-        origin = new int[loadCount];
-        sort = new int[loadCount];
+        Scanner sc = new Scanner(System.in);
 
-        for (int i = 0; i < loadCount; i++) {
-            origin[i] = Integer.parseInt(br.readLine());
+        int boxCount = sc.nextInt();
+
+        originBox = new int[boxCount];
+        sortBox = new int[boxCount];
+
+        for(int i = 0; i < boxCount; i++) {
+            int inputNumber = sc.nextInt();
+            originBox[i] = inputNumber;
+            sortBox[i] = inputNumber;
         }
 
-        sort = Arrays.copyOf(origin, origin.length);
-        Arrays.sort(sort);
+        Arrays.sort(sortBox);
 
-        br.close();
-        bw.flush();
-        bw.close();
+        for(int i = 0; i < boxCount; i++) {
+            if(originBox[i] != sortBox[i]) {
+                if (min > sortBox[i]) {
+                    min = sortBox[i];
+                }
+            }
+        }
+
+        for(int i = 0; i < boxCount; i++) {
+            if (sortBox[i] != originBox[i] && min != sortBox[i]) {
+                resultNumber = resultNumber + sortBox[i] + min;
+            }
+        }
+
+
+        System.out.println(resultNumber);
     }
 }
