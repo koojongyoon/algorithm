@@ -1,21 +1,17 @@
 package com.company.DataStructure;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Sol5639 {
 
     static int[] treeArray;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         treeArray = new int[10005];
         int i = 0;
-        String input;
-        while((input = br.readLine()) != null) {
-            treeArray[i++] = Integer.parseInt(input);
+        while(sc.hasNextInt()) {
+            treeArray[i++] = sc.nextInt();
         }
         recursive(0, i-1);
     }
@@ -35,6 +31,5 @@ public class Sol5639 {
         }
         recursive(s, e);
         recursive(e+1, r);
-        System.out.println(treeArray[root]);
     }
 }
