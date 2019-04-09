@@ -9,7 +9,7 @@ import java.util.Map;
 public class PreTestApril {
 
     static Car[][] map;
-    static Map<Integer, String> parkMem;
+    static Map<Integer, Car> parkMem;
 
     static String S = "S";
     static String N = "N";
@@ -19,10 +19,34 @@ public class PreTestApril {
     static class Car {
         String direction;
         int carNum;
+        int x;
+        int y;
+        int x_b;
+        int y_b;
 
-        public Car(String direction, int carNum) {
+        public Car(String direction, int carNum, int x, int y) {
+
             this.direction = direction;
             this.carNum = carNum;
+            this.x = x;
+            this.y = y;
+
+            if (direction.equals(N)) {
+                x_b = x+1;
+                y_b = y;
+            }
+            if (direction.equals(S)) {
+                x_b = x-1;
+                y_b = y;
+            }
+            if (direction.equals(E)) {
+                x_b = x;
+                y_b = y-1;
+            }
+            if (direction.equals(W)) {
+                x_b = x;
+                y_b = y+1;
+            }
         }
     }
 
@@ -40,7 +64,7 @@ public class PreTestApril {
             // 이동하는 포인트 null 처리
             for (int m = 0; m < 5; m++) {
                 for (int n = 0; n < 5; n++) {
-                    map[m][n] = new Car("Y", 0);
+                    map[m][n] = new Car("Y", 0, 0, 0);
                 }
             }
 
@@ -50,7 +74,7 @@ public class PreTestApril {
                 int x = Integer.parseInt(mapInput[0]);
                 int y = Integer.parseInt(mapInput[1]);
                 String direction = mapInput[2];
-                parkMem.put(k, direction);
+                parkMem.put(k, new Car(direction, k, x, y));
                 initialFillMap(k, x - 1, y - 1, direction);
             }
 
@@ -68,7 +92,7 @@ public class PreTestApril {
 
     //차의 형태대로 지도에 채워넣음
     private static void initialFillMap(int carNum, int x, int y, String direction) {
-        Car car = new Car(direction, carNum);
+        Car car = new Car(direction, carNum, x, y);
         map[x][y] = car;
         if (direction.equals(N)) {
             map[x+1][y] = car;
@@ -81,6 +105,14 @@ public class PreTestApril {
         }
         if (direction.equals(W)) {
             map[x][y+1] = car;
+        }
+    }
+
+    //차를 좌로 움직일수 있게 해줌
+    private static void leftMove(int carNum) {
+        Car car = parkMem.get(carNum);
+        while (car.x > 0) {
+            car.
         }
     }
 }
