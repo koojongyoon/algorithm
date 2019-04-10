@@ -10,6 +10,7 @@ public class PreTestApril {
 
     static Car[][] map;
     static Map<Integer, Car> parkMem;
+    static int moveCount = 0;
 
     static String S = "S";
     static String N = "N";
@@ -59,7 +60,7 @@ public class PreTestApril {
 
         int T = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < T; i++) {
+        for (int i = 1; i <= T; i++) {
             int carCount = Integer.parseInt(br.readLine());
 
             // 이동하는 포인트  default value처리
@@ -79,7 +80,7 @@ public class PreTestApril {
                 initialFillMap(k, x-1, y-1, direction);
             }
 
-            // 이동 후 좌표 확인
+            // 이동 전 좌표 확인
             for (int m = 0; m < 5; m++) {
                 for (int n = 0; n < 5; n++) {
                     System.out.print(map[m][n].carNum + " ");
@@ -87,7 +88,22 @@ public class PreTestApril {
                 System.out.println();
             }
             System.out.println("=========================");
-            leftMove(7);
+
+            // 1번차가 출구로 나가는 길 확인 (1번차의 x축의 위치가 3에 있지 않으면 빠져나갈수 없음)
+            if (parkMem.get(1).x != 2 || parkMem.get(1).x_b != 2) {
+                System.out.println("#" + i + " " + "-1");
+                continue;
+            }
+
+            // 1번차가 움직일수 있는 방향이 위아래밖에 안되면 빠져나갈수 없음
+            if (parkMem.get(1).direction.equals(N) || parkMem.get(1).direction.equals(S)) {
+                System.out.println("#" + i + " " + "-1");
+                continue;
+            }
+
+            // 1번차가 출구로 빠져나가기 위한 길 체크
+            Car car = parkMem.get(1);
+
 
             // 이동 후 좌표 확인
             for (int m = 0; m < 5; m++) {
@@ -97,7 +113,6 @@ public class PreTestApril {
                 System.out.println();
             }
         }
-
     }
 
     //차의 형태대로 지도에 채워넣음
@@ -118,14 +133,17 @@ public class PreTestApril {
         }
     }
 
+    //기존에 있던 차의 위치를 clean 시켜줌
     private static void cleanOriginPosition (int x, int y) {
         map[x][y] = new Car(0, x, y, "Y");
     }
 
+    //차량의 위치를 변경한 좌표에다 차량 정보를 넣어줌
     private static void moveCarPosition (int carNum, int x, int y, String direction) {
         map[x][y] = new Car(carNum, x, y, direction);
     }
 
+    //차량의 정보를 갱신함
     private static void modifyParkCarInfo (int carNum, Car carInfo) {
         parkMem.put(carNum, carInfo);
     }
@@ -152,12 +170,15 @@ public class PreTestApril {
             }
         }
 
-        cleanOriginPosition(originX, originY);   //원래 주차되어 있던 자리에서 clean
-        cleanOriginPosition(originX, originY_B); //원래 주차되어 있던 자리에서 clean
+        cleanOriginPosition(originX, originY);   //원래 주차되어 있던 앞자리 clean
+        cleanOriginPosition(originX, originY_B); //원래 주차되어 있던 뒷자리 clean
 
         moveCarPosition(carNum, car.x, car.y, car.direction);   //이동한 자리로 숫자 대체
         moveCarPosition(carNum, car.x, car.y_b, car.direction); //이동한 자리로 숫자 대체
 
         modifyParkCarInfo(carNum, car);
+
+        //이동횟수 1 증가
+        moveCount++;
     }
 }
