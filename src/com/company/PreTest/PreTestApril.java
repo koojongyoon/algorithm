@@ -17,20 +17,21 @@ public class PreTestApril {
     static String E = "E";
 
     static class Car {
-        String direction;
         int carNum;
         int x;
         int y;
         int x_b;
         int y_b;
+        String direction;
 
-        public Car(String direction, int carNum, int x, int y) {
+        public Car (int carNum, int x, int y, String direction) {
 
             this.direction = direction;
             this.carNum = carNum;
             this.x = x;
             this.y = y;
 
+            //입력받은 차의 뒷부분에 대한 좌표 처리
             if (direction.equals(N)) {
                 x_b = x+1;
                 y_b = y;
@@ -61,25 +62,34 @@ public class PreTestApril {
         for (int i = 0; i < T; i++) {
             int carCount = Integer.parseInt(br.readLine());
 
-            // 이동하는 포인트 null 처리
+            // 이동하는 포인트  default value처리
             for (int m = 0; m < 5; m++) {
                 for (int n = 0; n < 5; n++) {
-                    map[m][n] = new Car("Y", 0, 0, 0);
+                    cleanOriginPosition(m, n);
                 }
             }
 
-            //초기 입력값 SET
+            // 초기 입력값 SET
             for (int k = 1; k <= carCount; k++) {
                 String[] mapInput = br.readLine().split(" ");
                 int x = Integer.parseInt(mapInput[0]);
                 int y = Integer.parseInt(mapInput[1]);
                 String direction = mapInput[2];
-                parkMem.put(k, new Car(direction, k, x, y));
-                initialFillMap(k, x - 1, y - 1, direction);
+                parkMem.put(k, new Car(k, x-1, y-1, direction));
+                initialFillMap(k, x-1, y-1, direction);
             }
 
+            // 이동 후 좌표 확인
+            for (int m = 0; m < 5; m++) {
+                for (int n = 0; n < 5; n++) {
+                    System.out.print(map[m][n].carNum + " ");
+                }
+                System.out.println();
+            }
+            System.out.println("=========================");
+            leftMove(7);
 
-            //이동 후
+            // 이동 후 좌표 확인
             for (int m = 0; m < 5; m++) {
                 for (int n = 0; n < 5; n++) {
                     System.out.print(map[m][n].carNum + " ");
@@ -92,7 +102,7 @@ public class PreTestApril {
 
     //차의 형태대로 지도에 채워넣음
     private static void initialFillMap(int carNum, int x, int y, String direction) {
-        Car car = new Car(direction, carNum, x, y);
+        Car car = new Car(carNum, x, y, direction);
         map[x][y] = car;
         if (direction.equals(N)) {
             map[x+1][y] = car;
@@ -108,11 +118,46 @@ public class PreTestApril {
         }
     }
 
-    //차를 좌로 움직일수 있게 해줌
+    private static void cleanOriginPosition (int x, int y) {
+        map[x][y] = new Car(0, x, y, "Y");
+    }
+
+    private static void moveCarPosition (int carNum, int x, int y, String direction) {
+        map[x][y] = new Car(carNum, x, y, direction);
+    }
+
+    private static void modifyParkCarInfo (int carNum, Car carInfo) {
+        parkMem.put(carNum, carInfo);
+    }
+
+    // 방향을 보고 차를 왼쪽으로 움직일수 있게 해줌
     private static void leftMove(int carNum) {
+
         Car car = parkMem.get(carNum);
-        while (car.x > 0) {
-            car.
+        int originX =  car.x;
+        int originY = car.y;
+        int originY_B =  car.y_b;
+
+        if (car.direction.equals(W)) {
+            while (car.y > 0 && map[car.x][car.y-1].carNum == 0) {
+                car.y = car.y - 1;
+                car.y_b = car.y_b - 1;
+            }
         }
+
+        if (car.direction.equals(E)) {
+            while (car.y_b > 0 && map[car.x][car.y_b-1].carNum == 0) {
+                car.y = car.y - 1;
+                car.y_b = car.y_b - 1;
+            }
+        }
+
+        cleanOriginPosition(originX, originY);   //원래 주차되어 있던 자리에서 clean
+        cleanOriginPosition(originX, originY_B); //원래 주차되어 있던 자리에서 clean
+
+        moveCarPosition(carNum, car.x, car.y, car.direction);   //이동한 자리로 숫자 대체
+        moveCarPosition(carNum, car.x, car.y_b, car.direction); //이동한 자리로 숫자 대체
+
+        modifyParkCarInfo(carNum, car);
     }
 }
