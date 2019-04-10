@@ -3,6 +3,7 @@ package com.company.PreTest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,7 +103,14 @@ public class PreTestApril {
             }
 
             // 1번차가 출구로 빠져나가기 위한 길 체크
-            Car car = parkMem.get(1);
+            for (int k = 0; k < 5; k++) {
+                //1번차가 나가는 경로에 차가 0이나 1이 아닐경우 치우기 위한 주차 되어 있는 차를 찾는다.
+                if (map[2][k].carNum != 0 || map[2][k].carNum != 1) {
+                    ArrayList willMoveCar = new ArrayList<Car>();
+                    //이동할 차를 list에 담는다.
+                    willMoveCar.add(map[2][k]);
+                }
+            }
 
 
             // 이동 후 좌표 확인
