@@ -3,14 +3,15 @@ package com.company.PreTest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class PreTestApril {
 
     static Car[][] map;
     static Map<Integer, Car> parkMem;
+    static LinkedList<Car> carList;
     static int moveCount = 0;
 
     static String S = "S";
@@ -61,10 +62,11 @@ public class PreTestApril {
 
         int T = Integer.parseInt(br.readLine());
 
-        for (int i = 1; i <= T; i++) {
+        for (int testCase = 1; testCase <= T; testCase++) {
             int carCount = Integer.parseInt(br.readLine());
+            carList = new LinkedList<>();
 
-            // 이동하는 포인트  default value처리
+            // 이동하는 포인트  default value 처리
             for (int m = 0; m < 5; m++) {
                 for (int n = 0; n < 5; n++) {
                     cleanOriginPosition(m, n);
@@ -82,23 +84,9 @@ public class PreTestApril {
             }
 
             // 이동 전 좌표 확인
-            for (int m = 0; m < 5; m++) {
-                for (int n = 0; n < 5; n++) {
-                    System.out.print(map[m][n].carNum + " ");
-                }
-                System.out.println();
-            }
-            System.out.println("=========================");
+            printPark();
 
-            // 1번차가 출구로 나가는 길 확인 (1번차의 x축의 위치가 3에 있지 않으면 빠져나갈수 없음)
-            if (parkMem.get(1).x != 2 || parkMem.get(1).x_b != 2) {
-                System.out.println("#" + i + " " + "-1");
-                continue;
-            }
-
-            // 1번차가 움직일수 있는 방향이 위아래밖에 안되면 빠져나갈수 없음
-            if (parkMem.get(1).direction.equals(N) || parkMem.get(1).direction.equals(S)) {
-                System.out.println("#" + i + " " + "-1");
+            if (checkPossibleOUTCar(testCase)) {
                 continue;
             }
 
@@ -106,19 +94,64 @@ public class PreTestApril {
             for (int k = 0; k < 5; k++) {
                 //1번차가 나가는 경로에 차가 0이나 1이 아닐경우 치우기 위한 주차 되어 있는 차를 찾는다.
                 if (map[2][k].carNum != 0 || map[2][k].carNum != 1) {
-                    ArrayList willMoveCar = new ArrayList<Car>();
-                    //이동할 차를 list에 담는다.
-                    willMoveCar.add(map[2][k]);
+                    // 차량의 진로를 막고 있는 차량을 이동 대상에 포함시킨다.
+                    BFS(map[2][k]);
                 }
             }
 
-
             // 이동 후 좌표 확인
-            for (int m = 0; m < 5; m++) {
-                for (int n = 0; n < 5; n++) {
-                    System.out.print(map[m][n].carNum + " ");
+            printPark();
+
+            // 이동횟수 출력
+            System.out.println("#" + testCase + " " +  moveCount);
+        }
+    }
+
+    private static boolean checkPossibleOUTCar(int testCase) {
+        // 1번차가 출구로 나가는 길 확인 (1번차의 x축의 위치가 3에 있지 않으면 빠져나갈수 없음)
+        if (parkMem.get(1).x != 2 || parkMem.get(1).x_b != 2) {
+            System.out.println("#" + testCase + " " + "-1");
+            return true;
+        }
+
+        // 1번차가 움직일수 있는 방향이 위아래 빠져나갈수 없음
+        if (parkMem.get(1).direction.equals(N) || parkMem.get(1).direction.equals(S)) {
+            System.out.println("#" + testCase + " " + "-1");
+            return true;
+        }
+
+        // 1번차가 나가는 경로에 다른 차량이 서쪽이나 동쪽을 보고 있으면 1번 차량이 나갈수 없으므로 1번차가 빠져 나갈수 없다.
+        for (int k = 0; k < 5; k++) {
+            if (map[2][k].carNum != 0 || map[2][k].carNum != 1) {
+                if (map[2][k].direction.equals(W) || map[2][k].direction.equals(E)) {
+                    System.out.println("#" + testCase + " " + "-1");
+                    return true;
                 }
-                System.out.println();
+            }
+        }
+        return false;
+    }
+
+    private static void printPark() {
+        for (int m = 0; m < 5; m++) {
+            for (int n = 0; n < 5; n++) {
+                System.out.print(map[m][n].carNum + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("=========================");
+    }
+
+    private static void BFS(Car car) {
+        carList.add(car);
+        while (!carList.isEmpty()) {
+            Car pollCar = carList.poll();
+            // 1번차가 출구에 도달하면 끝
+            if ((pollCar.carNum == 1) && (pollCar.x == 2|| pollCar.x_b == 2) && (pollCar.y == 4 || pollCar.y_b == 4)) {
+                return;
+            }
+            while (pollCar.y >= 0) {
+
             }
         }
     }
@@ -141,17 +174,17 @@ public class PreTestApril {
         }
     }
 
-    //기존에 있던 차의 위치를 clean 시켜줌
+    // 기존에 있던 차의 위치를 clean 시켜줌
     private static void cleanOriginPosition (int x, int y) {
         map[x][y] = new Car(0, x, y, "Y");
     }
 
-    //차량의 위치를 변경한 좌표에다 차량 정보를 넣어줌
+    // 차량의 위치를 변경한 좌표에다 차량 정보를 넣어줌
     private static void moveCarPosition (int carNum, int x, int y, String direction) {
         map[x][y] = new Car(carNum, x, y, direction);
     }
 
-    //차량의 정보를 갱신함
+    // 차량의 정보를 갱신함
     private static void modifyParkCarInfo (int carNum, Car carInfo) {
         parkMem.put(carNum, carInfo);
     }
