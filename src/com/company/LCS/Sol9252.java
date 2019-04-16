@@ -3,9 +3,11 @@ package com.company.LCS;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 
 public class Sol9252 {
     static int[][] lcs;
+    static Stack<Character> stack;
 
     public static void main(String[] args) throws IOException {
 
@@ -49,5 +51,25 @@ public class Sol9252 {
         }
 
         System.out.println(lcs[firstLength-1][secondLength-1]);
+
+        int i = firstSequence.length()-1;
+        int k = secondSequence.length()-1;
+        stack = new Stack<>();
+
+        while (lcs[i][k] != 0) {
+            if (lcs[i][k] == lcs[i][k-1]) {
+                k--;
+            } else if (lcs[i][k] == lcs[i-1][k]) {
+                i--;
+            } else if (lcs[i][k] - 1 == lcs[i-1][k-1]) {
+                stack.push(first[i]);
+                i--;
+                k--;
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop());
+        }
     }
 }
