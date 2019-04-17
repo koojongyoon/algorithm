@@ -3,13 +3,13 @@ package com.company.BellmanFords;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Sol11657 {
 
-    static int[][] busMap;
     static Edge[] edges;
     static int[] dist;
-    static int MAX_TIME = 10000000;
+    static int MAX_TIME = 100000000;
     static int city;
     static int bus;
 
@@ -35,11 +35,7 @@ public class Sol11657 {
         edges = new Edge[bus];
         dist = new int[city+1];
 
-        for (int i = 0; i < city+1; i++) {
-            dist[i] = MAX_TIME;
-        }
-
-        dist[1] = 0;
+        Arrays.fill(dist, MAX_TIME);
 
         for (int i = 0; i < bus; i++) {
             String[] startEndTime = br.readLine().split(" ");
@@ -50,8 +46,10 @@ public class Sol11657 {
             edges[i] = new Edge(start, end, time);
         }
 
+        dist[1] = 0;
+
         if (bellmanFord(edges, dist)) {
-            for (int i = 2; i < city + 1; i++) {
+            for (int i = 2; i <= city; i++) {
                 System.out.println(dist[i] == MAX_TIME ? -1 : dist[i]);
             }
         } else {
@@ -61,7 +59,7 @@ public class Sol11657 {
     }
 
     private static boolean bellmanFord(Edge[] edges, int[] dist) {
-        for (int i = 0; i < city-1; i++) {
+        for (int i = 1; i <= city; i++) {
             for (int k = 0; k < bus; k++) {
                 if (dist[edges[k].to] > dist[edges[k].from] + edges[k].weight) {
                     dist[edges[k].to] = dist[edges[k].from] + edges[k].weight;
