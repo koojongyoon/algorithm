@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 
 public class Sol11657 {
 
-    static int[][] busMap;
     static Edge[] edges;
     static int[] dist;
     static int MAX_TIME = 10000000;
