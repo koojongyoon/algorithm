@@ -18,12 +18,10 @@ public class Sol1309 {
         lineCount[1] = 3;
         lineCount[2] = 7;
 
-        for (int i = 3; i < 100000; i++) {
-            lineCount[i] = lineCount[i-1] * 2 + lineCount[i-2];
+        for (int i = 3; i < 100001; i++) {
+            lineCount[i] = (lineCount[i-1] * 2 + lineCount[i-2])%9901;
         }
         result = lineCount[wooriCount];
-        //결과값 result에 +1해줘야함
-        long ans = result%9901;
-        System.out.println(ans);
+        System.out.println(result);
     }
 }
