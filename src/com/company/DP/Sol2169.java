@@ -37,14 +37,18 @@ public class Sol2169 {
             int[] rightTemp = new int[M];
             int[] leftTemp = new int[M];
 
-            leftTemp[0] = dpMap[i-1][0] + map[i-1][0];
+            leftTemp[0] = dpMap[i-1][0] + map[i][0];
+            dpMap[i][0] = leftTemp[0];
             for (int k = 1; k < M; k++) {
                 leftTemp[k] = Math.max(dpMap[i-1][k], dpMap[i][k-1]) + map[i][k];
+                dpMap[i][k] = leftTemp[k];
             }
 
-            rightTemp[M-1] = dpMap[i-1][M-1] + map[i-1][M-1];
+            rightTemp[M-1] = dpMap[i-1][M-1] + map[i][M-1];
+            dpMap[i][M-1] = rightTemp[M-1];
             for (int k = M-1; k > 0; k--) {
                 rightTemp[k-1] = Math.max(dpMap[i-1][k-1], dpMap[i][k]) + map[i][k-1];
+                dpMap[i][k-1] = rightTemp[k-1];
             }
             for (int k = 0; k < M; k++) {
                 dpMap[i][k] = leftTemp[k] > rightTemp[k] ? leftTemp[k] : rightTemp[k];
