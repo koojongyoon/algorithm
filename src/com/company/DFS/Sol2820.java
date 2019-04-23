@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// https://github.com/ISKU/Algorithm/blob/master/BOJ/2820/Main.java
 public class Sol2820 {
 
     static ArrayList<Integer>[] tree;
@@ -18,7 +17,7 @@ public class Sol2820 {
     static int[] lazy;
     static int[] segmentTree;
     static int[] salary;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         int employeeNum = sc.nextInt();
