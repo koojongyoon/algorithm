@@ -32,21 +32,21 @@ public class Sol6549 {
         br.close();
     }
 
-    private static class SegmentTree {
-        int n;
-        int[] arr;
-        int[] rangeMinIndex;
-        int INF = Integer.MAX_VALUE;
+    public static class SegmentTree {
+        public int n;
+        public int[] arr;
+        public int[] rangeMinIndex;
+        public int INF = Integer.MAX_VALUE;
 
         public SegmentTree(int[] arr) {
             n = arr.length;
             this.arr = arr.clone();
-            rangeMinIndex = new int[n<<2];    // n<<2  =  n*4
+            rangeMinIndex = new int[n*4];  //segment tree를 만들때 *4 를 한다.
 
             init(0, n-1, 1);
         }
 
-        private int init(int left, int right, int node) {
+        public int init(int left, int right, int node) {
             if (left == right) {
                 return rangeMinIndex[node] = left;
             }
@@ -57,7 +57,7 @@ public class Sol6549 {
             return rangeMinIndex[node] = arr[leftMinIndex] < arr[rightMinIndex] ? leftMinIndex : rightMinIndex;
         }
 
-        private int query (int left, int right, int node, int nodeLeft, int nodeRight) {
+        public int query (int left, int right, int node, int nodeLeft, int nodeRight) {
 
             if (nodeRight < left || right < nodeLeft) {
                 return INF;
