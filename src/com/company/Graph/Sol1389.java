@@ -8,8 +8,9 @@ public class Sol1389 {
 
     static boolean[][] map;
     static int[][] costMap;
+    static int[] sumArr;
 
-    static int MAX_VALUE = Integer.MAX_VALUE;
+    static int MAX_VALUE = 100000001;
 
     public static void main(String[] args) throws IOException {
 
@@ -21,6 +22,7 @@ public class Sol1389 {
         int relation = Integer.parseInt(peopleRelation[1]);
 
         costMap = new int[people+1][people+1];
+        sumArr = new int[people+1];
 
         for (int i = 0; i < relation; i++) {
             String[] fromTo = br.readLine().split(" ");
@@ -53,10 +55,22 @@ public class Sol1389 {
         }
 
         for (int i = 1; i < people+1; i++) {
+            int tmpSum = 0;
             for (int k = 1; k < people+1; k++) {
-                System.out.print(costMap[i][k] + " ");
+                tmpSum = tmpSum + costMap[i][k];
             }
-            System.out.println();
+            sumArr[i] = tmpSum;
         }
+
+        int minIndex = 99999999;
+        int minSum = 99999999;
+        for (int i = 1; i < sumArr.length; i++) {
+            if (minSum > sumArr[i]) {
+                minSum = sumArr[i];
+                minIndex = i;
+            }
+        }
+
+        System.out.println(minIndex);
     }
 }
