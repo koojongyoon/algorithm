@@ -1,4 +1,4 @@
-package com.company.DFS;
+package com.company.Tree;
 
 import java.io.*;
 import java.util.ArrayList;
