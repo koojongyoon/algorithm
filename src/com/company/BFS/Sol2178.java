@@ -1,4 +1,4 @@
-package com.company.DP;
+package com.company.BFS;
 
 import java.io.BufferedReader;
 import java.io.IOException;
