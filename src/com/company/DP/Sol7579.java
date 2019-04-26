@@ -35,7 +35,7 @@ public class Sol7579 {
 
         int i = 0;
         for (i = 0; i < sum && appMemory[i] < needMemory; i++); {
-            System.out.println(String.valueOf(i));
+            System.out.println(i);
             return;
         }
     }
