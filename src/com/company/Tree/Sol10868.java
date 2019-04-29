@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 
 public class Sol10868 {
 
+    static int INF = Integer.MAX_VALUE;
     static int N;
     static int M;
     static int[] tree;
-    static int[] inputArr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,28 +20,40 @@ public class Sol10868 {
         M = Integer.parseInt(NM[1]);
 
         tree = new int[N*4];
-        inputArr = new int[N+1];
 
         for (int i = 1; i <= N; i++) {
-            inputArr[i] = Integer.parseInt(br.readLine());
+            int val = Integer.parseInt(br.readLine());
+            update(i, val, 1,1, N);
         }
-
-        initTree(1);
 
         for (int i = 0; i < M; i++) {
             String[] startEnd = br.readLine().split(" ");
             int start = Integer.parseInt(startEnd[0]);
             int end = Integer.parseInt(startEnd[1]);
-            query(start, end);
+            System.out.println(query(1, 1, N, start, end));
         }
     }
 
-    private static int initTree(int index, int start, int end) {
-        int mid = (start+end) / 2;
-        tree[index] = initTree(index+1, start, mid) + initTree(index+1, mid+1, end);
+    private static int update(int pos, int val, int index, int start, int end) {
+        if (start > pos || end < pos) {
+            return tree[index];
+        }
+        if (start == end) {
+            return tree[index] = val;
+        }
+        int mid = (start+end)/2;
+        return tree[index] = Math.min(update(pos, val, index*2, start, mid), update(pos, val, index*2+1, mid+1, end));
     }
 
-    private static int query(int start, int end) {
-        return 0;
+    private static int query(int index, int start, int end, int findStart, int findStop) {
+        if (start > findStop || end < findStart) {
+            return INF;
+        }
+        if (start >= findStart && end <= findStop) {
+            return tree[index];
+        }
+        int mid = (start+end)/2;
+        return Math.min(query(index*2, start, mid, findStart, findStop)
+                , query(index*2+1, mid+1, end, findStart, findStop));
     }
 }
