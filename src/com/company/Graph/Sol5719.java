@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+// https://blog.naver.com/PostView.nhn?blogId=occidere&logNo=221426880947
 public class Sol5719 {
 
     static int INF = 100000001;
