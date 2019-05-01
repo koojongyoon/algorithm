@@ -1,4 +1,4 @@
-package com.company.BackTracking;
+package com.company.Permutation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
