@@ -20,9 +20,9 @@ public class Sol11066 {
             int K = Integer.parseInt(br.readLine());
             String[] numbersStr = br.readLine().split(" ");
 
-            dp = new int[501][501];
-            cost = new int[501];
-            sum = new int[501];
+            dp = new int[K+1][K+1];
+            cost = new int[K+1];
+            sum = new int[K+1];
 
             for (int i = 1; i <= K; i++) {
                 cost[i] = Integer.parseInt(numbersStr[i-1]);
