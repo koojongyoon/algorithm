@@ -6,9 +6,6 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-/**
- * Created by koojongyun on 2018. 11. 17..
- */
 public class Sol2493 {
     static class Mem {
         int index;
