@@ -21,13 +21,15 @@ public class Pra0032 {
             K = Integer.parseInt(NK[1]);
             String[] colorPaperStr = br.readLine().split(" ");
 
+            // 1) 초기 배열에 값을 할당하고 가장 처음값과 가장 마지막 값을 채워준다.
             initializeFirstLastColorPaper(colorPaperStr);
-
-            // 1) 0의 앞 뒤로 색깔이 같은 경우 같은 색깔로 채운다.
+            // 2) 0의 앞 뒤로 색깔이 같은 경우 같은 색깔로 채운다.
             fillFrontLastSameNumber();
-
-           int result = getResultLongestColorPaper();
-            bw.write("#" + t + " " + result);
+            // 3) 0이 아닌 숫자를 만날때 0이 아닌 숫의 앞뒤를 보고 인덱스만큼 계산해 준다
+            fillPossibleLongestNumber();
+            // 4) 가장 긴 인덱스의 값을 가진 값을 return 한다.
+            bw.write("#" + t + " " + getResultLongestColorPaper());
+            // 5) 값을 출력한다.
             bw.write("\n");
             bw.flush();
         }
@@ -36,6 +38,25 @@ public class Pra0032 {
         br.close();
     }
 
+    // 0이 아닌 숫자를 만날때 0이 아닌 숫의 앞뒤를 보고 인덱스만큼 계산해 준다
+    private static void fillPossibleLongestNumber() {
+        for (int i = 0; i < N; i++) {
+            if (colorPaper[i] != 0) {
+                for (int k = i; k > 0; k--) {
+
+                }
+                for (int k = 1; k < N; k++) {
+                    if (colorPaper[k] != 0) {
+                        int diffIndex = i - k;
+                        int diffLength = colorPaper[k] - colorPaper[i] - 1;
+                        int standardLongestLength = diffLength - diffIndex;
+                    }
+                }
+            }
+        }
+    }
+
+    // 0의 앞뒤로 색깔이 같은 경우 이 전의 색깔로 0을 채워준다.
     private static void fillFrontLastSameNumber() {
         for (int i = 0; i < N; i++) {
             if (colorPaper[i] == 0) {
@@ -46,10 +67,6 @@ public class Pra0032 {
                             // 0의 앞뒤로 색깔이 같은 경우
                             Arrays.fill(colorPaper, i, k-1, previousColor);
                             break;
-                        } else {
-                            // 0의 앞,뒤로 색깔이 다른 경우
-
-                            break;
                         }
                     }
                 }
@@ -57,6 +74,7 @@ public class Pra0032 {
         }
     }
 
+    // 제일 앞과 제일 뒤의 값은 시작값과 종료 값으로 채울수 있다.
     private static void initializeFirstLastColorPaper(String[] colorPaperStr) {
         colorPaper = new int[N];
         for (int i = 0; i < N; i++) {
