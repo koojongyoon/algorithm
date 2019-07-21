@@ -1,20 +1,23 @@
 package com.company.backjoon.Geometry;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+
 public class Sol2166 {
     static class Point {
-        int x;
-        int y;
-        Point(int x, int y) {
+        long x;
+        long y;
+        Point(long x, long y) {
             this.x = x;
             this.y = y;
         }
     }
     static ArrayList<Point> pointList;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int pointCount = Integer.parseInt(br.readLine());
