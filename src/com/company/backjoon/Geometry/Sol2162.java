@@ -13,7 +13,8 @@ public class Sol2162 {
         long y1;
         long x2;
         long y2;
-        Line (long x1, long y1, long x2, long y2) {
+
+        Line(long x1, long y1, long x2, long y2) {
             this.x1 = x1;
             this.y1 = y1;
             this.x2 = x2;
@@ -28,10 +29,10 @@ public class Sol2162 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        list = new Line[N+1];
-        par = new int[N+1];
+        list = new Line[N + 1];
+        par = new int[N + 1];
 
-        for (int i = 1; i <=N; i++) {
+        for (int i = 1; i <= N; i++) {
             par[i] = i;
         }
 
@@ -45,8 +46,8 @@ public class Sol2162 {
         }
 
         int iPar, jPar;
-        for (int i = 1; i <=N; i++) {
-            for (int j = 1; j <=N; j++) {
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= N; j++) {
                 if (i == j) {
                     continue;
                 }
@@ -60,7 +61,7 @@ public class Sol2162 {
             }
         }
 
-        int[] count = new int[N+1];
+        int[] count = new int[N + 1];
         for (int i = 1; i <= N; i++) {
             count[par[i]]++;
         }
@@ -80,8 +81,8 @@ public class Sol2162 {
     }
 
     private static boolean isCrossed(Line l1, Line l2) {
-        long chk1 = ccw(l1.x1,l1.y1, l1.x2, l1.y2, l2.x1, l2.y1) * ccw(l1.x1,l1.y1, l1.x2, l1.y2, l2.x2, l2.y2);
-        long chk2 = ccw(l2.x1,l2.y1, l2.x2, l2.y2, l1.x1, l1.y1) * ccw(l2.x1,l2.y1, l2.x2, l2.y2, l1.x2, l1.y2);
+        long chk1 = ccw(l1.x1, l1.y1, l1.x2, l1.y2, l2.x1, l2.y1) * ccw(l1.x1, l1.y1, l1.x2, l1.y2, l2.x2, l2.y2);
+        long chk2 = ccw(l2.x1, l2.y1, l2.x2, l2.y2, l1.x1, l1.y1) * ccw(l2.x1, l2.y1, l2.x2, l2.y2, l1.x2, l1.y2);
         if (chk1 == 0 && chk2 == 0) {
             return isOverlapped(l1, l2);
         }
@@ -121,8 +122,8 @@ public class Sol2162 {
     }
 
     private static int ccw(long x1, long y1, long x2, long y2, long x3, long y3) {
-        long resultCcw = x1*y2 + x2*y3 + x3*y1 - x2*y1 - x3*y2 - x1*y3;
-        if(resultCcw > 0) {
+        long resultCcw = x1 * y2 + x2 * y3 + x3 * y1 - x2 * y1 - x3 * y2 - x1 * y3;
+        if (resultCcw > 0) {
             return 1;
         } else if (resultCcw == 0) {
             return 0;
