@@ -41,7 +41,7 @@ public class Sol9240 {
         sortList();
 
         for (int i = 1; i < list.size(); i++) {
-            while (stack.size() > 1
+            while (stack.size() >= 2
                     && 0 >= ccw(stack.get(stack.size()-2), stack.get(stack.size()-1), list.get(i))) {
                 stack.pop();
             }
