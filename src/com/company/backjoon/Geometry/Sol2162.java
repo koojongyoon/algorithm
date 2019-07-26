@@ -3,25 +3,10 @@ package com.company.backjoon.Geometry;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 //https://code0xff.tistory.com/43?category=723759
+//선분 그룹
 public class Sol2162 {
-
-    static class Line {
-        long x1;
-        long y1;
-        long x2;
-        long y2;
-
-        Line(long x1, long y1, long x2, long y2) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-        }
-    }
-
     static int N;
     static Line[] list;
     static int[] par;
@@ -131,4 +116,19 @@ public class Sol2162 {
             return -1;
         }
     }
+
+    static class Line {
+        long x1;
+        long y1;
+        long x2;
+        long y2;
+
+        Line(long x1, long y1, long x2, long y2) {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+    }
+
 }

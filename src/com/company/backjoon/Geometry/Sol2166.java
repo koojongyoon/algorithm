@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-
+//다각형의 면적
 public class Sol2166 {
     static class Point {
         long x;

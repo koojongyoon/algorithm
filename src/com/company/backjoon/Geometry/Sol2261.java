@@ -5,33 +5,33 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
-class Point implements Comparable<Point> {
-    double x, y;
+public class Sol2261 {
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
+    static class Point implements Comparable<Point> {
+        double x, y;
 
-    @Override
-    public int compareTo(Point o) { // x 축 기반 정렬
-        if (this.x < o.x) {
-            return -1;
+        public Point(double x, double y) {
+            this.x = x;
+            this.y = y;
         }
-        if (this.x == o.x) {
-            return 0;
+
+        @Override
+        public int compareTo(Point o) { // x 축 기반 정렬
+            if (this.x < o.x) {
+                return -1;
+            }
+            if (this.x == o.x) {
+                return 0;
+            }
+            return 1;
         }
-        return 1;
+
+        public int getDistance(Point o) {
+            return (int) (Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2));
+        }
     }
 
-    public int getDistance(Point o) {
-        return (int) (Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2));
-    }
-}
-
-public class Sol2261_re {
     static ArrayList<Point> points = new ArrayList<>();
-
 
     public static void main(String args[]) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

@@ -22,7 +22,7 @@ public class Sol9240 {
             this.y = y;
         }
     }
-
+    //볼록껍질의 가장 큰 지름
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());

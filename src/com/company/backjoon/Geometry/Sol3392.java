@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 // https://codedoc.tistory.com/421
+//화성지도, 가장 넓은 면적
 public class Sol3392 {
 
     private static final int MAX = 30001;
@@ -36,15 +37,12 @@ public class Sol3392 {
 
         int dx = map[0].x;
         int area = 0;
-
         for (int i = 0; i < N; i++) {
             area = area + tree[1] * (map[i].x - dx);
-            update(1, H, 1, map[i].y1 + 1, map[i].y2, map[i].status);
+            update(0, H, i, map[i].y1 + 1, map[i].y2, map[i].status);
             dx = map[i].x;
         }
-
         System.out.println(area);
-
     }
 
     private static void update(int l, int r, int i, int L, int R, int value) {
@@ -77,14 +75,12 @@ public class Sol3392 {
     private static class Map implements Comparable<Map> {
         public int x, y1, y2;
         public int status;
-
         public Map(int x, int y1, int y2, int status) {
             this.x = x;
             this.y1 = y1;
             this.y2 = y2;
             this.status = status;
         }
-
         @Override
         public int compareTo(Map o) {
             return this.x - o.x;
