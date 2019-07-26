@@ -1,10 +1,9 @@
-package com.company.backjoon.LineSweeping;
+package com.company.backjoon.Geometry;
 
 import java.io.*;
 import java.util.*;
 
 // https://mygumi.tistory.com/294
-
 public class Sol2261 {
     static class Point implements Comparable<Point> {
         int x;
