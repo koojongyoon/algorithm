@@ -45,7 +45,7 @@ public class Sol10254 {
         int j = 1;
         for(int i=0; i<hull.size(); i++) {
             int i_next = (i+1) % hull.size();
-            for(;;) {
+            for (;;) {
                 int j_next = (j+1) % hull.size();
                 long bx = hull.get(i_next).x - hull.get(i).x;
                 long by = hull.get(i_next).y - hull.get(i).y;
