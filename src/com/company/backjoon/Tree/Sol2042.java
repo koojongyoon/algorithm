@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Created by koojongyun on 2018. 12. 29..
- */
 public class Sol2042 {
     static long[] inputArray;
     static long[] treeArray;
@@ -54,7 +51,8 @@ public class Sol2042 {
         if (start == end) {
             return treeArray[index] = inputArray[start];
         } else {
-            return treeArray[index] = initTree(index*2, start, (start+end)/2) + initTree(index*2+1, (start+end)/2+1, end);
+            int mid = (start + end)/ 2;
+            return treeArray[index] = initTree(index*2, start, mid) + initTree(index*2+1, mid+1, end);
         }
     }
 
@@ -71,8 +69,8 @@ public class Sol2042 {
         }
 
         //구하고자 하는 값중 일부만 노드에 포함되어 있을때
-        return sum(index*2, nodeStart, (nodeStart+nodeEnd)/2, findLeft, findRight)
-                + sum(index*2+1, (nodeStart+nodeEnd)/2+1, nodeEnd, findLeft, findRight);
+        int mid = (nodeStart + nodeEnd) / 2;
+        return sum(index*2, nodeStart, mid, findLeft, findRight) + sum(index*2+1, mid+1, nodeEnd, findLeft, findRight);
     }
 
     private static void update(int index, int nodeStart, int nodeEnd, int updateIndex, long diff) {
@@ -85,8 +83,9 @@ public class Sol2042 {
 
         //해당 노드를 포함하고 있는 값의 자식 노드를 찾아가며 변경값의 편차만큼 변경한다
         if (nodeStart != nodeEnd) {
-            update(index*2, nodeStart, (nodeStart+nodeEnd)/2, updateIndex, diff);
-            update(index*2+1, (nodeStart+nodeEnd)/2+1, nodeEnd, updateIndex, diff);
+            int mid = (nodeStart + nodeEnd)/2;
+            update(index*2, nodeStart, mid, updateIndex, diff);
+            update(index*2+1, mid+1, nodeEnd, updateIndex, diff);
         }
     }
 }
