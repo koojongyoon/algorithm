@@ -2,6 +2,7 @@ package com.company.backjoon.Tree;
 
 import java.io.*;
 
+//https://bowbowbow.tistory.com/4
 public class Sol10999 {
 
     static long[] inputArr;
@@ -59,7 +60,7 @@ public class Sol10999 {
         if (start > right || left > end) {
             return 0;
         }
-        if (start >= left && end <= right) {
+        if (start >= left && right >= end) {
             return tree[index];
         }
         int mid = (start + end)/2;
@@ -92,12 +93,12 @@ public class Sol10999 {
 
         if (start >= left && end <= right) {
             tree[index] = tree[index] + (end-start+1)*diff;
-            if (start != end) {
-                lazy[index*2] = lazy[index*2] + diff;
-                lazy[index*2+1] = lazy[index*2+1] + diff;
-            }
-            return;
+        if (start != end) {
+            lazy[index*2] = lazy[index*2] + diff;
+            lazy[index*2+1] = lazy[index*2+1] + diff;
         }
+        return;
+    }
         int mid = (start + end)/2;
         update(index*2, start, mid, left, right, diff);
         update(index*2+1, mid+1, end, left, right, diff);
