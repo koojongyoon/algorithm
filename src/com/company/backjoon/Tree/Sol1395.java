@@ -5,7 +5,7 @@ import java.io.*;
 public class Sol1395 {
     private static long[] tree;
     private static boolean[] lazy;
-    private static long H;
+    private static int H;
 
     //홀수이면 불이 켜짐
     //짝수이면 불이 꺼짐
@@ -50,7 +50,7 @@ public class Sol1395 {
             return tree[index];
         }
         int mid = (start + end)/2;
-        return  query(index*2, start, mid, left, right)
+        return  tree[index] = query(index*2, start, mid, left, right)
                 + query(index*2+1, mid+1, end, left,right);
     }
 
