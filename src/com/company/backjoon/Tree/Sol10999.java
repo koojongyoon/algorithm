@@ -93,12 +93,12 @@ public class Sol10999 {
 
         if (start >= left && end <= right) {
             tree[index] = tree[index] + (end-start+1)*diff;
-        if (start != end) {
-            lazy[index*2] = lazy[index*2] + diff;
-            lazy[index*2+1] = lazy[index*2+1] + diff;
+            if (start != end) {
+                lazy[index*2] = lazy[index*2] + diff;
+                lazy[index*2+1] = lazy[index*2+1] + diff;
+            }
+            return;
         }
-        return;
-    }
         int mid = (start + end)/2;
         update(index*2, start, mid, left, right, diff);
         update(index*2+1, mid+1, end, left, right, diff);
