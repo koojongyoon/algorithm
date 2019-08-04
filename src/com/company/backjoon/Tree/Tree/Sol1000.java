@@ -1,4 +1,4 @@
-package com.company.backjoon.Tree;
+package com.company.backjoon.Tree.Tree;
 
 public class Sol1000 {
     static class Tree {

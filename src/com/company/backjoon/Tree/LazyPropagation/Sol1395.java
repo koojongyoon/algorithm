@@ -1,4 +1,4 @@
-package com.company.backjoon.Tree;
+package com.company.backjoon.Tree.LazyPropagation;
 
 import java.io.*;
 
