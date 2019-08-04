@@ -52,13 +52,26 @@ public class Sol3653 {
     }
 
     private static void update(int pos, int val) {
-        while (pos < size) {
+        for (int i = 0; i < size; i = i + (i&-i)) {
             tree[pos] = tree[pos] + val;
-            pos = pos + (pos & -pos);
         }
     }
 
-    private static  int sum(int pos) {
+    private static int sum(int pos) {
+        int result = 0;
+        for (int i = pos; i > 0; i = i - (i & -i)) {
+            result = result + tree[pos];
+        }
+        return result;
+    }
+
+    private static void update2(int pos, int val) {
+        while (pos < size) {
+            tree[pos] = tree[pos] + val;
+        }
+    }
+
+    private static  int sum2(int pos) {
         int ret = 0;
         while (pos > 0) {
             ret = ret + tree[pos];
