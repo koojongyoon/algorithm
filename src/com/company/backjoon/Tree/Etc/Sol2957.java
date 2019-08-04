@@ -1,4 +1,4 @@
-package com.company.backjoon.Tree;
+package com.company.backjoon.Tree.Etc;
 
 import java.io.*;
 import java.util.ArrayList;
