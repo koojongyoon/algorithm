@@ -16,16 +16,15 @@ public class Sol2268 {
         N = Integer.parseInt(NM[0]);
         M = Integer.parseInt(NM[1]);
 
-        StringBuilder sb = new StringBuilder();
         H = (int) Math.ceil(Math.log(N) / Math.log(2));
 
         tree = new long[2 * H];
 
         for (int i = 0; i < M; i++) {
             String[] inputStr = br.readLine().split(" ");
+
             int command = Integer.parseInt(inputStr[0]);
             if (command == 0) {
-
                 int left = Integer.parseInt(inputStr[1]);
                 int right = Integer.parseInt(inputStr[2]);
 
@@ -36,26 +35,28 @@ public class Sol2268 {
                 }
                 System.out.println(sum(1, 1, H, left, right));
             } else if (command == 1) {
-
                 int updateIndex = Integer.parseInt(inputStr[1]);
                 int modifyNumber = Integer.parseInt(inputStr[2]);
-                update(updateIndex, modifyNumber);
+                long diff = modifyNumber- tree[updateIndex];
+                update(1, 1, N, updateIndex, diff);
             }
         }
     }
 
-    public static void update(int idx, int val) {
-        int index = H + idx - 1;
-        tree[index] = val;
-
-        while (index > 1) {
-            index /= 2;
-            tree[index] = tree[index * 2] + tree[index * 2 + 1];
+    private static void update(int index, int start, int end, int updateIndex, long diff) {
+        if (updateIndex < start || updateIndex > end) {
+            return;
+        }
+        tree[index] = tree[index] + diff;
+        int mid = (start + end)/2;
+        if (index < H) {
+            update(index*2, start, mid, updateIndex, diff);
+            update(index*2+1, mid+1, end, updateIndex, diff);
         }
     }
 
-    public static long sum(int index, int start, int end, int left, int right) {
-        if (end < left || start > right) {
+    private static long sum(int index, int start, int end, int left, int right) {
+        if (start > right || end < left) {
             return 0;
         }
         if (left <= start && end <= right) {

@@ -62,7 +62,7 @@ public class Sol5676 {
                 + multiply(index*2+1, mid+1, end, left, right);
     }
 
-    private static long update(int index, int start, int end, int updateIndex, int diff) {
+    private static long update(int index, int start, int end, int updateIndex, long diff) {
         if (updateIndex < start || updateIndex > end) {
             return 0;
         }
@@ -72,7 +72,7 @@ public class Sol5676 {
         int mid = (start + end)/2;
         update(index*2, start, mid, updateIndex, diff);
         update(index*2+1, mid+1, end, updateIndex, diff);
-        tree[index] = tree[index*2] + tree[index*2+1];
+        return tree[index] = tree[index*2] + tree[index*2+1];
      }
 
     private static long initTree(int index, int start, int end) {
