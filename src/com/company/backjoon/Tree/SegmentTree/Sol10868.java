@@ -1,4 +1,4 @@
-package com.company.backjoon.Tree.Etc;
+package com.company.backjoon.Tree.SegmentTree;
 
 import java.io.BufferedReader;
 import java.io.IOException;

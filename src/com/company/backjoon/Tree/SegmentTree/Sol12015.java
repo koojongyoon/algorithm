@@ -1,19 +1,19 @@
 package com.company.backjoon.Tree.SegmentTree;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Sol12015 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         int N = input.nextInt();
 
         int[] array = new int[N];
 
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < N; i++) {
             array[i] = input.nextInt();
-            System.out.print(lis(array, N));
+        }
+        System.out.print(lis(array, N));
     }
 
     private static int lis(int[] array, int size) {
