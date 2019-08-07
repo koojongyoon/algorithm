@@ -8,6 +8,7 @@ public class Sol2243 {
 
     static int N;
     static long[] tree;
+    static int result;
 
     public static void main(String[] args) throws IOException {
 
@@ -18,6 +19,7 @@ public class Sol2243 {
         for (int i = 0; i < N; i++) {
             String[] inputStr = br.readLine().split(" ");
             int command = Integer.parseInt(inputStr[0]);
+            result = 0;
             if (command == 1) {
                 int pickIndex = Integer.parseInt(inputStr[1]);
                 pick(1, 1, N, pickIndex);

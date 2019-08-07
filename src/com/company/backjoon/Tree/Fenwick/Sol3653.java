@@ -11,16 +11,17 @@ public class Sol3653 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int T = Integer.parseInt(br.readLine());
-        for (int t = 0; t < T; t++) {
-            String[] line = br.readLine().split(" ");
+        String[] line;
+        int t = Integer.parseInt(br.readLine());
+        int[] pos;
+
+        while (t-- > 0) {
+            line = br.readLine().split(" ");
             int n = Integer.parseInt(line[0]);
             int m = Integer.parseInt(line[1]);
-
-            int[] pos = new int[n+1];
+            pos = new int[n+1];
             tree = new int[n + m + 1];
             size = n + m + 1;
-
             for (int i = 1; i <= n; i++) {
                 pos[i] = i + m;
                 update(pos[i], 1);
@@ -49,16 +50,18 @@ public class Sol3653 {
     }
 
     private static void update(int pos, int val) {
-        for (int i = 0; i < size; i = i + (i&-i)) {
+        while (pos < size) {
             tree[pos] = tree[pos] + val;
+            pos = pos + (pos & -pos);
         }
     }
 
-    private static int sum(int pos) {
-        int result = 0;
-        for (int i = pos; i > 0; i = i - (i & -i)) {
-            result = result + tree[pos];
+    private static  int sum(int pos) {
+        int ret = 0;
+        while (pos > 0) {
+            ret = ret + tree[pos];
+            pos = pos & (pos-1);
         }
-        return result;
+        return ret;
     }
 }
