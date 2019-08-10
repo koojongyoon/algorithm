@@ -1,4 +1,4 @@
-package com.company.backjoon.LCA;
+package com.company.backjoon.Tree.LCA;
 
 import java.io.BufferedReader;
 import java.io.IOException;
