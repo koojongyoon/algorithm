@@ -9,7 +9,9 @@ class TreeForSub {
             this.data = data;
         }
     }
+
     Node root;
+
     Node makeBST(int start, int end) {
         if (start > end) {
             return null;

@@ -28,12 +28,12 @@ class Upgrade {
         return node;
     }
 
-    int countPathWithSum(int targetSum) {
+    public int countPathWithSum(int targetSum) {
         ArrayList<Integer> array = new ArrayList<Integer>();
         return countPathWithSum(root, targetSum, array);
     }
 
-    int countPathWithSum(Node root, int targetSum, ArrayList<Integer> array) {
+    private int countPathWithSum(Node root, int targetSum, ArrayList<Integer> array) {
         if (root == null) {
             return 0;
         }
@@ -53,14 +53,14 @@ class Upgrade {
         }
     }
 
-    void addValue(ArrayList<Integer> array, int value) {
+    private void addValue(ArrayList<Integer> array, int value) {
         for (int i = 0; i < array.size(); i++) {
             array.set(i, array.get(i) + value);
         }
         array.add(value);
     }
 
-    int countPaths(ArrayList<Integer> array, int targetSum) {
+    private int countPaths(ArrayList<Integer> array, int targetSum) {
         int totalPaths = 0;
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i) == targetSum) {
@@ -70,7 +70,7 @@ class Upgrade {
         return totalPaths;
     }
 
-    int countPathsWithSumFromNode(Node node, int targetSum, int currSum) {
+    private int countPathsWithSumFromNode(Node node, int targetSum, int currSum) {
         if (node == null) {
             return 0;
         }
@@ -87,7 +87,7 @@ class Upgrade {
 
 public class Sol1005_upgrade {
     public static void main(String[] args) {
-        Tree tree = new Tree(10);
+        Upgrade tree = new Upgrade(10);
         System.out.println(tree.countPathWithSum(5));
     }
 }

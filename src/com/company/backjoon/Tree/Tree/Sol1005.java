@@ -27,11 +27,11 @@ class Tree {
         return node;
     }
 
-    int countPathWithSum(int targetSum) {
+    public int countPathWithSum(int targetSum) {
         return countPathWithSum(root, targetSum);
     }
 
-    int countPathWithSum(Node root, int targetSum) {
+    private int countPathWithSum(Node root, int targetSum) {
         if (root == null) {
             return 0;
         }
@@ -41,7 +41,7 @@ class Tree {
         return pathsFromRoot + pathsOnLeft + pathsOnRight;
     }
 
-    int countPathsWithSumFromNode(Node node, int targetSum, int currSum) {
+    private int countPathsWithSumFromNode(Node node, int targetSum, int currSum) {
         if (node == null) {
             return 0;
         }
@@ -55,6 +55,7 @@ class Tree {
         return totalPaths;
     }
 }
+
 public class Sol1005 {
     public static void main(String[] args) {
         Tree tree = new Tree(10);
