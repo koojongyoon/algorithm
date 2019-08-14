@@ -1,0 +1,63 @@
+package com.company.backjoon.Tree.SegmentTree.midvalue;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Sol9426 {
+
+    static long[] arr;
+    static long[] tree;
+    static long totalSum;
+    static int N;
+    static int K;
+    static int MAX = 65536;
+    static int MAX_N = 250001;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] inputArr = br.readLine().split(" ");
+        N = Integer.parseInt(inputArr[0]);
+        K = Integer.parseInt(inputArr[1]);
+        arr = new long[MAX_N];
+        tree = new long[4*MAX_N-1];
+        totalSum = 0;
+
+        for (int n = 1; n <= N; n++) {
+            arr[n] = Integer.parseInt(br.readLine());
+        }
+
+        for (int i = 1; i <= K - 1; i++) {
+            update(1, 1, MAX-1, arr[i], 1);
+        }
+
+        for (int i = K; i <= N; i++) {
+            update(1, 1, MAX-1, arr[i], 1);
+            totalSum = totalSum + query( 1, 1, MAX-1, (K + 1) / 2);
+            update(1, 1, MAX-1, arr[i - K + 1], -1);
+        }
+        System.out.println(totalSum);
+    }
+
+    private static long update (int index, int start, int end, long updateIndex, long updateValue) {
+        if (updateIndex < start || updateIndex > end) {
+            return tree[index];
+        }
+        if (start == end) {
+            return tree[index] = tree[index] + updateValue;
+        }
+        int mid = (start + end) / 2;
+        return tree[index] = update(index*2, start, mid, updateIndex, updateValue) + update(index*2+1, mid+1, end, updateIndex, updateValue);
+    }
+
+    private static long query (int index, int start, int end, long value) {
+        int mid = (start + end) / 2;
+        if (start == end) {
+            return start;
+        }
+        if (tree[index * 2] >= value) {
+            return query(index*2, start, mid, value);
+        }
+        return query(index*2+1, mid+1, end, value - tree[index*2]);
+    }
+}
