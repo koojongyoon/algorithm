@@ -23,18 +23,18 @@ public class Sol9426 {
         tree = new int[4*MAX_N-1];
         totalSum = 0;
 
-        for (int n = 1; n <= N; n++) {
+        for (int n = 0; n < N; n++) {
             arr[n] = Integer.parseInt(br.readLine());
         }
 
-        for (int i = 1; i <= K - 1; i++) {
-            update(1, 1, MAX-1, arr[i], 1);
+        for (int i = 0; i <  K - 1; i++) {
+            update(1, 0, MAX-1, arr[i], 1);
         }
 
-        for (int i = K; i <= N; i++) {
-            update(1, 1, MAX-1, arr[i], 1);
-            totalSum = totalSum + query( 1, 1, MAX-1, (K + 1) / 2);
-            update(1, 1, MAX-1, arr[i - K + 1], -1);
+        for (int i = K - 1; i <  N; i++) {
+            update(1, 0, MAX-1, arr[i], 1);
+            totalSum = totalSum + query( 1, 0, MAX-1, (K+1) / 2);
+            update(1, 0, MAX-1, arr[i - K + 1], -1);
         }
         System.out.println(totalSum);
     }
