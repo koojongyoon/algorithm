@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 
 public class Sol9426 {
 
-    static long[] arr;
-    static long[] tree;
+    static int[] arr;
+    static int[] tree;
     static long totalSum;
-    static int N;
+    static long N;
     static int K;
     static int MAX = 65536;
     static int MAX_N = 250001;
@@ -18,9 +18,9 @@ public class Sol9426 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] inputArr = br.readLine().split(" ");
         N = Integer.parseInt(inputArr[0]);
-        K = Integer.parseInt(inputArr[1]);
-        arr = new long[MAX_N];
-        tree = new long[4*MAX_N-1];
+        K =  Integer.parseInt(inputArr[1]);
+        arr = new int[MAX_N];
+        tree = new int[4*MAX_N-1];
         totalSum = 0;
 
         for (int n = 1; n <= N; n++) {
@@ -39,19 +39,19 @@ public class Sol9426 {
         System.out.println(totalSum);
     }
 
-    private static long update (int index, int start, int end, long updateIndex, long updateValue) {
+    private static int update (int index, long start, long end, int updateIndex, int updateValue) {
         if (updateIndex < start || updateIndex > end) {
             return tree[index];
         }
         if (start == end) {
             return tree[index] = tree[index] + updateValue;
         }
-        int mid = (start + end) / 2;
+        long mid = (start + end) / 2;
         return tree[index] = update(index*2, start, mid, updateIndex, updateValue) + update(index*2+1, mid+1, end, updateIndex, updateValue);
     }
 
-    private static long query (int index, int start, int end, long value) {
-        int mid = (start + end) / 2;
+    private static long query (int index, long start, long end, long value) {
+        long mid = (start + end) / 2;
         if (start == end) {
             return start;
         }
