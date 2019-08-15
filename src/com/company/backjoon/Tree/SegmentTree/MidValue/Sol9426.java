@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Sol9426_re {
+public class Sol9426 {
     static int N;
     static int K;
     static int[] arr;
