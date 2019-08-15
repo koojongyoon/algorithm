@@ -1,0 +1,39 @@
+트리 시험 준비
+- 트리
+    - Sol1000: 이진검색트리 기본형
+    - Sol1001: 트리 순회 방법 구현 [ Inorder(left -> root -> right), Preorder(root-left-right), Postoder(left, right, root)]
+    - Sol1002: 트리의 발란스 확인 [자식들 중 노드의 깊이가 서로 1이상 차이가 나지 않는 경우 발란스가 맞다고 한다.]
+    - Sol1003: 이진트리에서 첫번째 공통부모 찾기
+    - Sol1967: 트리의 지름
+    - Sol1068: 트리
+    - Sol1004: 이진트리의 삽입, 삭제
+    - Sol1005: 이진트리의 노드의 합산값을 특정값으로 가지는 경로 갯수 찾기 with upgrade
+    - Sol1006: Sub트리인지 확인하기
+    -
+- 세그먼트 트리 (https://lyzqm.blogspot.com/2017/07/segment-tree-3653.html)
+    - Sol2042: 구간합 구하기
+    - Sol2357: 최대값과 최솟값 구하기
+    - Sol10868: 최솟값
+    - Sol7578: 공장(케이블 짝짓기)
+    - Sol1275: 커피숍2
+    - Sol7469 : K번째수 (Merge sort)
+    - Sol2268: 수들의 합
+    - Sol11505: 구간곱
+    - Sol2243: 사탕상자
+    - Sol 1572: 중앙값1
+    - Sol9426: 중앙값2
+    -
+- 세그먼트 트리 with lazy propagation ( https://bowbowbow.tistory.com/4 )
+    - Sol10999: 구간합 구하기2
+    - Sol1395: 스위치
+
+- 펜윅 트리(BinaryIndexTree, https://www.crocus.co.kr/666 )
+    - Sol3653: 영화수집
+    - Sol11658: 구간합 구하기 3
+    - Sol01280: 나무심기
+    -
+- LCA
+    - Sol11438: LCA1
+    - Sol11438: LCA2
+- 이진검색트리
+    - Sol2957: 이진 탐색 트리
