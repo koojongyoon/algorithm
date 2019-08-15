@@ -12,7 +12,7 @@ public class Sol2957 {
 
         int nodeCount = Integer.parseInt(br.readLine());
         int[] nodeDepth = new int[nodeCount+1];
-        int insertCount = 0;
+        long insertCount = 0;
 
         ArrayList<Integer> nodeList = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public class Sol2957 {
         bw.close();
     }
 
-    private static int getNodeDepth(int node, int[] nodeDepth, ArrayList<Integer> nodeList) {
+    private static long getNodeDepth(int node, int[] nodeDepth, ArrayList<Integer> nodeList) {
         int size = nodeList.size();
         int lowerBound = getLowerBound(0, size, node, nodeList);
         int left = lowerBound > 0 ? nodeDepth[nodeList.get(lowerBound - 1)] : 0;
