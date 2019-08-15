@@ -21,12 +21,11 @@ public class Sol2243 {
 
         for (int i = 0; i < N; i++) {
             String[] inputStr = br.readLine().split(" ");
+            ret = 0;
             int command = Integer.parseInt(inputStr[0]);
             if (command == 1) {
                 int candyIndex = Integer.parseInt(inputStr[1]);
-
                 long getIndex = query(1, 0, MAX-1, candyIndex);
-                ret = 0;
                 update(1, 0, MAX-1, getIndex, -1);
             } else if (command == 2) {
                 int boxIndex = Integer.parseInt(inputStr[1]);
@@ -43,7 +42,6 @@ public class Sol2243 {
         }
         int mid = (start + end)/2;
 
-
         if (ret == 0 && (index*2 <= MAX*4 && box[index*2] >= k)) {
             return ret = query(index*2, start, mid, k);
         }
@@ -53,13 +51,14 @@ public class Sol2243 {
         if (ret == 0 && (index*2+1 <= MAX*4 && box[index*2+1] >= k)) {
             return ret = query(index*2+1, mid+1, end, k);
         }
+
         return -1;
     }
 
     private static void update(int index, int start, int end, long updateIndex, int candyCount) {
-
-        if (!(start <= updateIndex && updateIndex <= end))
+        if (updateIndex < start && updateIndex > end) {
             return;
+        }
 
         box[index] = box[index] + candyCount;
 
