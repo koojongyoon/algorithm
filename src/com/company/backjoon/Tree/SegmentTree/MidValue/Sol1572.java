@@ -1,4 +1,4 @@
-package com.company.backjoon.Tree.SegmentTree.midvalue;
+package com.company.backjoon.Tree.SegmentTree.MidValue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
