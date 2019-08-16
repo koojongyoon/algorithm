@@ -7,7 +7,7 @@ public class Sol1717 {
 
     public static int find(int x) {
         if(x == parent[x])
-            return x;
+            return parent[x];
         else
             return parent[x] = find(parent[x]);
     }

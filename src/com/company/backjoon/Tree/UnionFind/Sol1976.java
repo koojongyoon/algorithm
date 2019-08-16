@@ -27,7 +27,6 @@ public class Sol1976 {
 
         makeParent(city);
 
-
         int[] schedule = new int[m+1];
 
         for (int i = 1; i <= m; i++) {
