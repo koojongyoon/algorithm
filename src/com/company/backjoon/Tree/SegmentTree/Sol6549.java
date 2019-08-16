@@ -5,7 +5,6 @@ import java.io.*;
 //https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=221057769152&proxyReferer=https%3A%2F%2Fwww.google.com%2F
 public class Sol6549 {
 
-    static long[] histogram;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
