@@ -50,8 +50,7 @@ public class Sol1395 {
             return tree[index];
         }
         int mid = (start + end)/2;
-        return  query(index*2, start, mid, left, right)
-                + query(index*2+1, mid+1, end, left,right);
+        return  query(index*2, start, mid, left, right) + query(index*2+1, mid+1, end, left,right);
     }
 
     private static void update(int index, int start, int end, int left, int right) {
