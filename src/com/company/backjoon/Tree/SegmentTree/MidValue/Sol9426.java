@@ -55,9 +55,11 @@ public class Sol9426 {
         }
 
         int mid = (start + end)/2;
+
         if (tree[index*2] >= value) {
             return sum(index*2, start, mid, value);
+        } else {
+            return sum(index*2+1, mid+1, end, value- tree[index*2]);
         }
-        return sum(index*2+1, mid+1, end, value- tree[index*2]);
     }
 }

@@ -60,8 +60,7 @@ public class Sol10999 {
             return tree[index];
         }
         int mid = (start + end)/2;
-        return  query(index*2, start, mid, left, right)
-                + query(index*2+1, mid+1, end, left,right);
+        return  query(index*2, start, mid, left, right) + query(index*2+1, mid+1, end, left,right);
     }
 
     private static long initTree(int index, int start, int end) {
@@ -70,8 +69,7 @@ public class Sol10999 {
         }
 
         int mid = (start + end)/2;
-        return tree[index] = initTree(index*2, start, mid)
-                + initTree(index*2+1, mid+1, end);
+        return tree[index] = initTree(index*2, start, mid) + initTree(index*2+1, mid+1, end);
     }
 
     private static void update(int index, int start, int end, int left, int right, int diff) {
