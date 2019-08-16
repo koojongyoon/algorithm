@@ -11,15 +11,12 @@ public class Sol3653 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String[] line;
         int t = Integer.parseInt(br.readLine());
-        int[] pos;
-
         while (t-- > 0) {
-            line = br.readLine().split(" ");
+            String[] line = br.readLine().split(" ");
             int n = Integer.parseInt(line[0]);
             int m = Integer.parseInt(line[1]);
-            pos = new int[n+1];
+            int[] pos = new int[n+1];
             tree = new int[n + m + 1];
             size = n + m + 1;
             for (int i = 1; i <= n; i++) {
