@@ -39,8 +39,8 @@ public class Sol1275 {
             long diff = b- inputArr[a];
             inputArr[a] = b;
             update(1, 1, n, a, diff);
-
         }
+
         bw.flush();
         br.close();
         bw.close();
@@ -51,8 +51,7 @@ public class Sol1275 {
             return tree[index] = inputArr[start];
         }
         int mid = (start+end)/2;
-        return tree[index] = initTree(index*2, start, mid)
-                + initTree(index*2+1, mid+1, end);
+        return tree[index] = initTree(index*2, start, mid) + initTree(index*2+1, mid+1, end);
     }
 
     private static long sum(int index, long start, long end, long left, long right) {
@@ -63,8 +62,7 @@ public class Sol1275 {
             return tree[index];
         }
         long mid = (start + end) / 2;
-        return sum(index*2, start, mid, left, right)
-                + sum(index*2+1, mid+1, end, left, right);
+        return sum(index*2, start, mid, left, right) + sum(index*2+1, mid+1, end, left, right);
     }
 
     private static void update(int index, long start, long end, int updateIndex, long diff) {
@@ -72,6 +70,7 @@ public class Sol1275 {
             return;
         }
         tree[index] = tree[index] + diff;
+
         if (start != end) {
             long mid = (start + end) / 2;
             update(index * 2, start, mid, updateIndex, diff);

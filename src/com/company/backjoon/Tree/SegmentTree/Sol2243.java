@@ -35,23 +35,19 @@ public class Sol2243 {
         }
     }
 
-    private static long query(int index, int start, int end, int k) {
+    private static long query(int index, int start, int end, int candyIndex) {
         if (start == end && ret == 0) {
             System.out.println(start);
             return start;
         }
         int mid = (start + end)/2;
-
-        if (ret == 0 && (index*2 <= MAX*4 && box[index*2] >= k)) {
-            return ret = query(index*2, start, mid, k);
+        if (ret == 0 && (index*2 <= MAX*4 && box[index*2] >= candyIndex)) {
+            return ret = query(index*2, start, mid, candyIndex);
         }
-
-        k = k - box[index*2];
-
-        if (ret == 0 && (index*2+1 <= MAX*4 && box[index*2+1] >= k)) {
-            return ret = query(index*2+1, mid+1, end, k);
+        candyIndex = candyIndex - box[index*2];
+        if (ret == 0 && (index*2+1 <= MAX*4 && box[index*2+1] >= candyIndex)) {
+            return ret = query(index*2+1, mid+1, end, candyIndex);
         }
-
         return -1;
     }
 
@@ -59,9 +55,7 @@ public class Sol2243 {
         if (updateIndex < start && updateIndex > end) {
             return;
         }
-
         box[index] = box[index] + candyCount;
-
         if (start != end) {
             int mid = (start + end) / 2;
             update(index * 2, start, mid, updateIndex, candyCount);

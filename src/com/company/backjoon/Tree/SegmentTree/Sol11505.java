@@ -66,8 +66,7 @@ public class Sol11505 {
             return tree[index];
         }
         int mid = (start + end)/2;
-        return (multiply(index*2, start, mid, left, right)
-                * multiply(index*2+1, mid+1, end, left, right)) % MOD;
+        return (multiply(index*2, start, mid, left, right) * multiply(index*2+1, mid+1, end, left, right)) % MOD;
     }
 
     private static long initTree(int index, int start, int end) {

@@ -16,11 +16,10 @@
     - Sol10868: 최솟값
     - Sol7578: 공장(케이블 짝짓기)
     - Sol1275: 커피숍2
-    - Sol7469 : K번째수 (Merge sort)
     - Sol2268: 수들의 합
     - Sol11505: 구간곱
     - Sol2243: 사탕상자
-    - Sol 1572: 중앙값1
+    - Sol1572: 중앙값1
     - Sol9426: 중앙값2
     -
 - 세그먼트 트리 with lazy propagation ( https://bowbowbow.tistory.com/4 )

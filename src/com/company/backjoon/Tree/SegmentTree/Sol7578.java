@@ -42,14 +42,14 @@ public class Sol7578 {
     }
 
     static private void update(int index, int start, int end , int left, int right) {
-        if(right < start || end < left) {
+        if (right < start || end < left) {
             return;
         }
         if (start >= left && end <= right) {
-            tree[index] += 1;
+            tree[index] = tree[index] + 1;
         }
         else {
-            int mid = (start+end)/2;
+            int mid = (start + end) / 2;
             update(index*2, start, mid, left, right);
             update(index*2+1,  mid+1, end, left, right);
         }
@@ -63,8 +63,6 @@ public class Sol7578 {
             return tree[index];
         }
         int mid = (start+end)/2;
-        return sum(index*2, start, mid, leaf)
-                + sum(index*2+1, mid+1, end, leaf)
-                + tree[index];
+        return sum(index*2, start, mid, leaf) + sum(index*2+1, mid+1, end, leaf) + tree[index];
     }
 }
