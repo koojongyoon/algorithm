@@ -2,11 +2,10 @@ package com.company.backjoon.Tree.SegmentTree;
 
 import java.io.*;
 
+//https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=221057769152&proxyReferer=https%3A%2F%2Fwww.google.com%2F
 public class Sol6549 {
 
     static long[] histogram;
-    static long[] dp;
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -19,7 +18,6 @@ public class Sol6549 {
         while ((histogram = br.readLine().split(" ")).length > 1) {
             int n = Integer.parseInt(histogram[0]);
             arr = new int[n];
-
             for (int i = 1; i <= n; i++) {
                 arr[i-1] = Integer.parseInt(histogram[i]);
             }
@@ -81,22 +79,14 @@ public class Sol6549 {
         }
 
         public long getMaxWidth(int left, int right) {
-            long maxWidth;
-            long tmpWidth;
             int minIndex = query(left, right, 1, 0, n-1);
-
-            maxWidth = (long) (right - left + 1) * (long) arr[minIndex];
-
+            long maxWidth = (long) (right - left + 1) * (long) arr[minIndex];
             if (left <= minIndex-1) {
-                tmpWidth = getMaxWidth(left, minIndex-1);
-                maxWidth = Math.max(maxWidth, tmpWidth);
+                maxWidth = Math.max(maxWidth, getMaxWidth(left, minIndex-1));
             }
-
             if (minIndex+1 <= right) {
-                tmpWidth = getMaxWidth(minIndex+1, right);
-                maxWidth = Math.max(maxWidth, tmpWidth);
+                maxWidth = Math.max(maxWidth,  getMaxWidth(minIndex+1, right));
             }
-
             return maxWidth;
         }
     }
