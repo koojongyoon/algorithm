@@ -35,7 +35,7 @@
     - Sol11438: LCA1
     - Sol11438: LCA2
 - LIS
-
+    - Sol1365: 꼬인 전기줄
 - 이진검색트리
     - Sol2957: 이진 탐색 트리
 - Union Find

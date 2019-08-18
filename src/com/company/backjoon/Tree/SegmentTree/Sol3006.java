@@ -17,11 +17,10 @@ public class Sol3006 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
-        int num = 0;
 
         for(int i=1; i<= N; i++) {
             st = new StringTokenizer(br.readLine());
-            num = Integer.parseInt(st.nextToken());
+            int num = Integer.parseInt(st.nextToken());
             data[i] = new Node(num, i);
         }
 
@@ -30,15 +29,17 @@ public class Sol3006 {
 
         int s =1, e = N;
 
-        int result = 0;
+        int result;
 
         for(int i=1; i<= N; i++) {
             if(i % 2 != 0) {
+                //홀수인 경우
                 int target = data[s].index;
                 result = getCount(1, 1, N, 1, target -1);
                 update(1, 1, N, target);
                 s++;
             } else {
+                //짝수인 경우
                 int target = data[e].index;
                 result = getCount(1, 1, N, target+1, N);
                 update(1, 1, N, target);
