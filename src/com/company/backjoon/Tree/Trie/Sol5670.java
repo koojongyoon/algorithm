@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Sol5670 {
-    static int SIZE = 26;
+    static int SIZE = 26;   //숫자는 10으로 하고 알파벳은 26으로 한다.
     static int count = 0;
 
     public static void main(String[] args) throws IOException {
