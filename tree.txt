@@ -31,6 +31,7 @@
 - 펜윅 트리(BinaryIndexTree, https://www.crocus.co.kr/666 )
     - Sol3653: 영화수집
     - Sol11658: 구간합 구하기 3
+    - Sol2934: LRH식물
 - LCA
     - Sol11438: LCA1
     - Sol11438: LCA2
