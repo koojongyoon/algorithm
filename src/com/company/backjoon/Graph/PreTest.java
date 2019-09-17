@@ -14,12 +14,12 @@ public class PreTest {
     static int M;
 
     static class Pair {
-        int start;
-        int end;
+        int destination;
+        int weight;
 
-        Pair (int start, int end) {
-            this.start = start;
-            this.end = end;
+        Pair (int destination, int weight) {
+            this.destination = destination;
+            this.weight = weight;
         }
     }
 
@@ -78,7 +78,7 @@ public class PreTest {
         }
     }
 
-    private static boolean bfs (int hi,int lo) {
+    private static boolean bfs (int hi, int lo) {
         LinkedList<Integer> queue = new LinkedList<>();
         ArrayList<Integer> visit = new ArrayList<>();
 
@@ -87,15 +87,16 @@ public class PreTest {
         }
         queue.add(0);
         visit.add(0, 1);
+
         while (!queue.isEmpty()) {
             int here = queue.peekFirst();
-            queue.pop();
+            queue.pollFirst();
             if (here == N - 1) {
                 break;
             }
-            for (int i = 0; i < pairs[here].size(); ++i) {
-                int there = ((Pair) pairs[here].get(i)).start;
-                int velocity = ((Pair) pairs[here].get(i)).end;
+            for (int i = 0; i < pairs[here].size(); i++) {
+                int there = ((Pair) pairs[here].get(i)).destination;
+                int velocity = ((Pair) pairs[here].get(i)).weight;
                 if (velocity < lo || velocity > hi || visit.get(i) != 0) {
                     continue;
                 }
