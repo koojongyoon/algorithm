@@ -44,7 +44,7 @@ public class PreTest3 {
             adj = new int[E+1][2];
             weightList = new ArrayList();
             parent = new int[V+1];
-
+            weightList.add(new Edge(0, Integer.MAX_VALUE));
             for (int e = 1; e <= E; e++) {
                 String[] ABS = br.readLine().split(" ");
                 int A = Integer.parseInt(ABS[0]);
@@ -71,7 +71,7 @@ public class PreTest3 {
 
     private static int kruskal(int start, int end) {
         int result = Integer.MAX_VALUE;
-        for (int i = 1; i <= weightList.size(); i++) {
+        for (int i = 1; i < weightList.size(); i++) {
             result = Math.min(result, findMinWeight(start, end, i) - ((Edge) weightList.get(i)).weight);
         }
         return result;
