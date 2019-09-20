@@ -33,9 +33,9 @@ public class PreTest2 {
             N = Integer.parseInt(NM[0]);   // 1<=n<=1000
             M = Integer.parseInt(NM[1]);   // 1<=m<=4000
 
-            edges = new ArrayList[N];
+            edges = new ArrayList[N+2];
 
-            for (int i = 0; i < N; i++) {
+            for (int i = 0; i <= N; i++) {
                 edges[i] = new ArrayList<Edge>();
             }
 
@@ -53,8 +53,12 @@ public class PreTest2 {
                 weights.add(S);
             }
             sortedWeight = modifyDuplicate(weights);
+            String[] startEnd = br.readLine().split(" ");
 
-            int minDifference = 10000001;
+            int start = Integer.parseInt(startEnd[0]);
+            int end = Integer.parseInt(startEnd[1]);
+
+            int minDifference = 1000000001;
             int foundPathUsing = 0;
             for (int low = 0; low < weights.size(); low++) {
                 boolean foundPath = false;
